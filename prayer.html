@@ -200,10 +200,10 @@ function renderPrayers() {
 
 renderPrayers();
   // 🔔 CHING
-  const sound = 
-    document.getElementById("magicSound");
-  sound.volume = 0.5;
-  sound.play();
+  const sound = new 
+    Audio("https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3");
+sound.volume = 0.5;
+sound.play();
 
   // 💾 Guardar oración
   let prayers = JSON.parse(localStorage.getItem("prayers")) || [];
