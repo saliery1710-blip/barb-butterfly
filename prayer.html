@@ -129,8 +129,7 @@ a:hover {
     src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3" type="audio/mpeg">
   </audio>
 <audio id="magicSound" 
-  src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3"></audio>
-
+  src="ching.mp3"></audio>
 <div class="container">
 
 <h1>🌸 Prayer Garden ✨</h1>
@@ -200,8 +199,7 @@ function renderPrayers() {
 
 renderPrayers();
   // 🔔 CHING
-  const sound = new 
-    Audio("https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3");
+  const sound = document.getElementById("magicSound");
 sound.volume = 0.5;
 sound.play();
 
