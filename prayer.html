@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prayer Garden</title>
+
+<style>
+
+body {
+  margin: 0;
+  font-family: Verdana;
+  background: linear-gradient(#ffe6f5, #e6f0ff);
+  color: #6a5d6d;
+  overflow-x: hidden;
+  animation: glowBG 6s infinite alternate;
+}
+
+@keyframes glowBG {
+  from { box-shadow: inset 0 0 40px #ffe6ff; }
+  to { box-shadow: inset 0 0 80px #cce6ff; }
+}
+
+/* Intro */
+#magicIntro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #fff 0%, #ffd6ec 50%, #e6f0ff 100%);
+  z-index: 9999;
+  animation: fadeIntro 2.5s forwards;
+}
+
+@keyframes fadeIntro {
+  0% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+/* Contenedor */
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 60px auto;
+  background: #fff8ee;
+  border: 5px double #f4b8cd;
+  padding: 30px;
+  text-align: center;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: scale(1.02);
+}
+
+/* Campo de estrellas */
+#starField {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  color: white;
+  font-size: 18px;
+  animation: twinkle 3s infinite alternate;
+  text-shadow: 0 0 8px #fff, 0 0 15px #ffb6ff;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.4; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.3); }
+}
+
+input, textarea {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #d8b4ff;
+  border-radius: 10px;
+  font-family: Verdana;
+}
+
+button {
+  background: #ffccf9;
+  border: 2px solid #f4b8cd;
+  padding: 10px 20px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.prayer-counter {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ff69b4;
+  font-size: 18px;
+}
+
+a {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #6a5d6d;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #ff69b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="magicIntro"></div>
+<div id="starField"></div>
+<audio id="magicSound">
+  <source src="ching.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<h1>🌸 Prayer Garden ✨</h1>
+
+<p>Escribí tu pedido y una estrella brillará en el cielo.</p>
+
+<form id="prayerForm">
+<input type="text" placeholder="Tu nombre (opcional)">
+<textarea placeholder="Escribí tu pedido aquí..." required></textarea>
+<button type="submit">Enviar oración</button>
+</form>
+
+<div class="prayer-counter">
+Oraciones recibidas: <span id="count">00000</span>
+</div>
+
+<a href="index.html">⬅ Volver al Portal</a>
+
+</div>
+
+<script>
+
+const form = document.getElementById("prayerForm");
+const starField = document.getElementById("starField");
+
+let savedStars = localStorage.getItem("starsCount");
+if (!savedStars) savedStars = 0;
+
+for (let i = 0; i < savedStars; i++) {
+  createStar();
+}
+
+document.getElementById("count").innerText =
+  savedStars.toString().padStart(5, "0");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  savedStars++;
+  localStorage.setItem("starsCount", savedStars);
+
+  document.getElementById("count").innerText =
+    savedStars.toString().padStart(5, "0");
+
+  createStar();
+
+document.getElementById("magicSound").volume = 0.5;
+ document.getElementById("magicSound").play();
+  form.reset();
+});
+
+function createStar() {
+  const star = document.createElement("div");
+  star.className = "star";
+  star.innerHTML = "✦";
+  star.style.left = Math.random() * window.innerWidth + "px";
+  star.style.top = Math.random() * window.innerHeight + "px";
+  starField.appendChild(star);
+}
+
+</script>
+
+</body>
+</html>

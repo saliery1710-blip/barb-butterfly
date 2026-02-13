@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barb Butterfly</title>
+
+<style>
+
+/* Fondo */
+body {
+  margin: 0;
+  font-family: Verdana;
+  background: linear-gradient(#ffe6f0, #e6ffe6);
+  color: #6a5d6d;
+  overflow-x: hidden;
+  animation: glowBody 6s infinite alternate;
+}
+
+@keyframes glowBody {
+  from { box-shadow: inset 0 0 40px #ffe6f0; }
+  to { box-shadow: inset 0 0 80px #e6ccff; }
+}
+
+/* Intro mágica */
+#magicIntro {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #fff 0%, #ffd6ec 50%, #e6ffe6 100%);
+  z-index: 9999;
+  animation: fadeIntro 2.5s forwards;
+}
+
+@keyframes fadeIntro {
+  0% { opacity: 1; transform: scale(1); }
+  80% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.2); visibility: hidden; }
+}
+
+/* Glitter */
+.glitter {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: glitterAnim 15s linear infinite;
+  opacity: 0.3;
+}
+
+@keyframes glitterAnim {
+  from { background-position: 0 0; }
+  to { background-position: 300px 300px; }
+}
+
+/* Pétalos */
+.petalo {
+  position: fixed;
+  top: -10px;
+  font-size: 20px;
+  animation: caer linear infinite;
+}
+
+@keyframes caer {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Tabla principal */
+.main-table {
+  width: 95%;
+  max-width: 900px;
+  margin: 30px auto;
+  background: #fff8ee;
+  border: 5px double #bcd39b;
+}
+
+.banner {
+  height: 220px;
+  background: linear-gradient(45deg, #ffd6ec, #e6ffe6);
+  border: 4px double #f4b8cd;
+  text-align: center;
+  color: #ff69b4;
+}
+
+.banner h1 {
+  padding-top: 60px;
+  font-size: 36px;
+  text-shadow: 0 0 10px white;
+}
+
+.box {
+  background: #f8dce6;
+  border: 3px solid #bcd39b;
+  padding: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 20px #ffc0ff;
+}
+
+.blog-post {
+  background: #fff0f5;
+  border: 2px dashed #f4b8cd;
+  padding: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease;
+}
+
+.blog-post:hover {
+  transform: scale(1.02);
+}
+
+.shrine-box {
+  background: linear-gradient(#ffe6ff, #e6e6ff);
+  border: 3px solid #d8b4ff;
+  padding: 10px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.shrine-box:hover {
+  transform: scale(1.02);
+}
+
+.tienda-card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.tienda-card:hover {
+  transform: scale(1.03);
+}
+
+.tienda-card button {
+  background: #ffccf9;
+  border: 2px solid #f4b8cd;
+  padding: 8px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.menu-button {
+  background: #dce9c8;
+  border: 2px solid #f4b8cd;
+  padding: 6px;
+  margin: 5px 0;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #6a5d6d;
+  font-weight: bold;
+}
+
+.menu-button:hover {
+  background: #f4b8cd;
+  color: white;
+}
+
+/* Estrellas cursor */
+.cursor-star {
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  color: white;
+  text-shadow: 0 0 6px #ffb6ff;
+  animation: fadeStar 0.8s forwards;
+}
+
+@keyframes fadeStar {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(2); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-table, .main-table tr, .main-table td {
+    display: block;
+    width: 100% !important;
+  }
+  .box { margin-bottom: 15px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="magicIntro"></div>
+<div class="glitter"></div>
+
+<table class="main-table" cellspacing="10">
+
+<tr>
+<td colspan="3">
+<div class="banner">
+<h1>Barb Butterfly</h1>
+<p>Bienvenida al espacio de las hijas</p>
+</div>
+</td>
+</tr>
+
+<tr>
+
+<td width="200" class="box">
+<h3>Perfil</h3>
+<p>Nombre: Barbara</p>
+<p>Alias: Hija amada de Dios ✨</p>
+</td>
+
+<td class="box">
+
+<h2>My Diary</h2>
+
+<div class="blog-post">
+<h3>12 Feb 2026</h3>
+<p>Hoy trabajé en mi web cutie para las chicas.</p>
+</div>
+
+<div class="shrine-box">
+<h3>Espacio para Él</h3>
+<p>"La senda de los justos es como la luz de la aurora."</p>
+</div>
+
+<h2>🛍 Tienda</h2>
+
+<div class="tienda-card">
+<h3>Devocional “Raíces Firmes”</h3>
+<p>Crecer profundamente en la Palabra 🌷</p>
+<button>Comprar</button>
+</div>
+
+<div class="tienda-card">
+<h3>Stickers Cristianos</h3>
+<p>Arte con propósito 🎀</p>
+<button>Comprar</button>
+</div>
+
+<h2>🌷 Galería Celestial</h2>
+
+<div class="tienda-card">
+<input type="file" id="uploadImg" accept="image/*">
+<div id="gallery"></div>
+</div>
+
+<h2>💌 Libro de Mensajes</h2>
+
+<div class="tienda-card">
+<input type="text" id="chatInput" placeholder="Escribe un mensaje..." style="width:100%; padding:5px;">
+<button onclick="enviarMensaje()">Enviar</button>
+<div id="chatBox" style="margin-top:10px;"></div>
+</div>
+
+</td>
+
+<td width="200" class="box">
+
+<a href="#" class="menu-button">Prayer Garden</a>
+
+<button onclick="toggleMusic()" id="musicBtn">
+🎵 Play Magic
+</button>
+
+<audio id="musica" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+</td>
+
+</tr>
+</table>
+
+<script>
+
+/* Música */
+function toggleMusic() {
+  const music = document.getElementById("musica");
+  const btn = document.getElementById("musicBtn");
+
+  if (music.paused) {
+    music.volume = 0.4;
+    music.play();
+    btn.innerText = "🌙 Stop Magic";
+  } else {
+    music.pause();
+    btn.innerText = "🎵 Play Magic";
+  }
+}
+
+/* Pétalos */
+function crearPetalo() {
+  var petalo = document.createElement("div");
+  petalo.classList.add("petalo");
+  petalo.innerHTML = "🌸";
+  petalo.style.left = Math.random() * window.innerWidth + "px";
+  petalo.style.animationDuration = (Math.random() * 3 + 3) + "s";
+  document.body.appendChild(petalo);
+  setTimeout(() => { petalo.remove(); }, 6000);
+}
+setInterval(crearPetalo, 600);
+
+/* Estrellitas */
+document.addEventListener("mousemove", function(e) {
+  let star = document.createElement("div");
+  star.className = "cursor-star";
+  star.innerHTML = "✦";
+  star.style.left = e.pageX + "px";
+  star.style.top = e.pageY + "px";
+  document.body.appendChild(star);
+  setTimeout(() => { star.remove(); }, 800);
+});
+
+/* Galería */
+document.getElementById("uploadImg").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.createElement("img");
+    img.src = e.target.result;
+    img.style.width = "100%";
+    img.style.marginTop = "10px";
+    img.style.borderRadius = "15px";
+    img.style.boxShadow = "0 0 10px #ffc0ff";
+    document.getElementById("gallery").appendChild(img);
+  };
+  reader.readAsDataURL(file);
+});
+
+/* Chat con guardado */
+function enviarMensaje() {
+  const input = document.getElementById("chatInput");
+  const chatBox = document.getElementById("chatBox");
+  if (input.value.trim() === "") return;
+
+  const msg = document.createElement("p");
+  msg.textContent = "🌸 " + input.value;
+  msg.style.background = "#fff0f5";
+  msg.style.padding = "5px";
+  msg.style.borderRadius = "10px";
+  msg.style.margin = "5px 0";
+
+  chatBox.appendChild(msg);
+
+  let mensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
+  mensajes.push(input.value);
+  localStorage.setItem("mensajes", JSON.stringify(mensajes));
+
+  input.value = "";
+}
+
+/* Cargar mensajes guardados */
+window.onload = function() {
+  let mensajes = JSON.parse(localStorage.getItem("mensajes")) || [];
+  const chatBox = document.getElementById("chatBox");
+  mensajes.forEach(texto => {
+    const msg = document.createElement("p");
+    msg.textContent = "🌸 " + texto;
+    msg.style.background = "#fff0f5";
+    msg.style.padding = "5px";
+    msg.style.borderRadius = "10px";
+    msg.style.margin = "5px 0";
+    chatBox.appendChild(msg);
+  });
+};
+
+</script>
+
+</body>
+</html>
