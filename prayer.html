@@ -124,6 +124,9 @@ a:hover {
 
 <div id="magicIntro"></div>
 <div id="starField"></div>
+  <audio id="magicSound">
+  <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3" type="audio/mpeg">
+  </audio>
 <audio id="magicSound">
   <source src="ching.mp3" type="audio/mpeg">
 </audio>
@@ -142,7 +145,7 @@ a:hover {
 
 <div class="prayer-counter">
 Oraciones recibidas: <span id="count">00000</span>
-</div>
+<div id="prayerList" style="margin-top:20px; text-align:left;"></div>
 
 <a href="index.html">⬅ Volver al Portal</a>
 
@@ -166,6 +169,11 @@ document.getElementById("count").innerText =
 form.addEventListener("submit", function(e) {
   e.preventDefault();
 
+  const name = form.querySelector("input").value || "Anónimo";
+  const message = form.querySelector("textarea").value;
+
+  if (!message.trim()) return;
+
   savedStars++;
   localStorage.setItem("starsCount", savedStars);
 
@@ -173,9 +181,36 @@ form.addEventListener("submit", function(e) {
     savedStars.toString().padStart(5, "0");
 
   createStar();
+function renderPrayers() {
+  const prayerList = document.getElementById("prayerList");
+  const prayers = JSON.parse(localStorage.getItem("prayers")) || [];
 
-document.getElementById("magicSound").volume = 0.5;
- document.getElementById("magicSound").play();
+  prayerList.innerHTML = "";
+
+  prayers.slice().reverse().forEach(p => {
+    const div = document.createElement("div");
+    div.style.background = "#fff0f5";
+    div.style.padding = "10px";
+    div.style.margin = "8px 0";
+    div.style.borderRadius = "10px";
+    div.innerHTML = "<strong>🌸 " + p.name + "</strong><br>" + p.message;
+    prayerList.appendChild(div);
+  });
+}
+
+renderPrayers();
+  // 🔔 CHING
+  const sound = document.getElementById("magicSound");
+  sound.volume = 0.5;
+  sound.play();
+
+  // 💾 Guardar oración
+  let prayers = JSON.parse(localStorage.getItem("prayers")) || [];
+  prayers.push({ name, message });
+  localStorage.setItem("prayers", JSON.stringify(prayers));
+
+  renderPrayers();
+
   form.reset();
 });
 
