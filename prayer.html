@@ -125,11 +125,11 @@ a:hover {
 <div id="magicIntro"></div>
 <div id="starField"></div>
   <audio id="magicSound">
-  <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3" type="audio/mpeg">
+  <source 
+    src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3" type="audio/mpeg">
   </audio>
-<audio id="magicSound">
-  <source src="ching.mp3" type="audio/mpeg">
-</audio>
+<audio id="magicSound" 
+  src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkle-902.mp3"></audio>
 
 <div class="container">
 
@@ -200,7 +200,8 @@ function renderPrayers() {
 
 renderPrayers();
   // 🔔 CHING
-  const sound = document.getElementById("magicSound");
+  const sound = 
+    document.getElementById("magicSound");
   sound.volume = 0.5;
   sound.play();
 
