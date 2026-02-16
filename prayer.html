@@ -67,8 +67,13 @@ body {
   position: absolute;
   color: white;
   font-size: 18px;
-  animation: twinkle 3s infinite alternate;
+  animation: twinkle 3s infinite alternate, floatStar 20s linear infinite;
   text-shadow: 0 0 8px #fff, 0 0 15px #ffb6ff;
+}
+
+@keyframes floatStar {
+  from { transform: translateY(0px); }
+  to { transform: translateY(-50px); }
 }
 
 @keyframes twinkle {
@@ -141,7 +146,9 @@ a:hover {
 <textarea placeholder="Escribí tu pedido aquí..." required></textarea>
 <button type="submit">Enviar oración</button>
 </form>
-
+<div id="elevatedMessage" style="display:none; font-weight:bold; color:#ff69b4; margin-top:15px;">
+✨ Tu oración ha sido elevada al cielo ✨
+</div>
 <div class="prayer-counter">
 Oraciones recibidas: <span id="count">00000</span>
 <div id="prayerList" style="margin-top:20px; text-align:left;"></div>
@@ -160,6 +167,11 @@ if (!savedStars) savedStars = 0;
 
 for (let i = 0; i < savedStars; i++) {
   createStar();
+  const msg = document.getElementById("elevatedMessage");
+msg.style.display = "block";
+setTimeout(() => {
+  msg.style.display = "none";
+}, 3000);
 }
 
 document.getElementById("count").innerText =
@@ -180,6 +192,12 @@ form.addEventListener("submit", function(e) {
     savedStars.toString().padStart(5, "0");
 
   createStar();
+  const msg = document.getElementById("elevatedMessage");
+msg.style.display = "block";
+
+setTimeout(() => {
+  msg.style.display = "none";
+}, 3000);
 function renderPrayers() {
   const prayerList = document.getElementById("prayerList");
   const prayers = JSON.parse(localStorage.getItem("prayers")) || [];
@@ -192,8 +210,18 @@ function renderPrayers() {
     div.style.padding = "10px";
     div.style.margin = "8px 0";
     div.style.borderRadius = "10px";
-    div.innerHTML = "<strong>🌸 " + p.name + "</strong><br>" + p.message;
-    prayerList.appendChild(div);
+    div.innerHTML = `
+<strong>🌸 ${p.name}</strong><br>
+${p.message}
+<br>
+<button onclick="amen(this)">🤍 Amén</button>
+<span class="amenCount">0</span>
+`;
+    function amen(btn) {
+  const countSpan = btn.nextElementSibling;
+  let count = parseInt(countSpan.innerText);
+  countSpan.innerText = count + 1;
+    }
   });
 }
 
