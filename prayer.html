@@ -199,6 +199,18 @@ setTimeout(() => {
   msg.style.display = "none";
 }, 3000);
 function renderPrayers() {
+  function amen(btn) {
+  const countSpan = btn.nextElementSibling;
+  let count = parseInt(countSpan.innerText);
+  countSpan.innerText = count + 1;
+}
+  div.innerHTML = `
+<strong>🌸 ${p.name}</strong><br>
+${p.message}
+<br>
+<button onclick="amen(this)">🤍 Amén</button>
+<span class="amenCount">0</span>
+`;
   const prayerList = document.getElementById("prayerList");
   const prayers = JSON.parse(localStorage.getItem("prayers")) || [];
 
