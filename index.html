@@ -10,11 +10,16 @@
 /* Fondo */
 body {
   margin: 0;
-  font-family: Verdana;
-  background: linear-gradient(#ffe6f0, #e6ffe6);
-  color: #6a5d6d;
-  overflow-x: hidden;
-  animation: glowBody 6s infinite alternate;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(-45deg, #ffd6f6, #fce1ff, #e6d0ff, #ffeefc);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes glowBody {
