@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prayer Garden</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-<style>
 
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
 body {
   margin: 0;
   font-family: 'Cormorant Garamond', serif;
@@ -69,18 +70,21 @@ button {
   font-weight: bold;
   color: #ff69b4;
   font-size: 18px;
+}
+
 h1 {
   font-family: 'Cinzel Decorative', serif;
   font-size: 42px;
   letter-spacing: 3px;
   text-shadow: 0 0 10px #ffb6ff, 0 0 20px #ffd6f6;
+}
+
 h1::after {
   content: " ✨🌙✨ ";
   display: block;
   font-size: 20px;
   margin-top: 5px;
 }
-
 </style>
 </head>
 
@@ -88,15 +92,11 @@ h1::after {
 
 <div id="starField"></div>
 
-<!-- 🔊 AUDIO CORRECTAMENTE COLOCADO -->
-<audio id="magicSound" src="ching.mp3" preload="auto"></audio>
-
 <div class="container">
 
 <h1>🌸 Prayer Garden ✨</h1>
 <p>Escribí tu pedido y una estrella brillará en el cielo.</p>
 
-<form id="prayerForm">
 <form onsubmit="event.preventDefault(); enviarOracion();">
 
 <input type="text" id="nombreInput" placeholder="Tu nombre (opcional)">
@@ -107,131 +107,44 @@ h1::after {
 
 </form>
 
-<div id="prayerBox" style="margin-top:20px;"></div>
-
-<div class="prayer-counter">
-Oraciones recibidas: <span id="count">00000</span>
-</div>
-
-<div id="prayerList" style="margin-top:20px; text-align:left;"></div>
+<div id="prayerBox" style="margin-top:20px; text-align:left;"></div>
 
 <a href="index.html">⬅ Volver al Portal</a>
 
 </div>
+
+<!-- 🔥 Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 
 <script>
-  const firebaseConfig = { ... };
+const firebaseConfig = {
+  apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
+  authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
+  projectId: "barbbutterfly-bc9a6",
+  storageBucket: "barbbutterfly-bc9a6.firebasestorage.app",
+  messagingSenderId: "1015786068141",
+  appId: "1:1015786068141:web:e6b7b3e5966fad547c8e24"
+};
 
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-</script>
-<script>
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-const form = document.getElementById("prayerForm");
-const starField = document.getElementById("starField");
-const prayerList = document.getElementById("prayerList");
-
-let savedStars = localStorage.getItem("starsCount");
-if (!savedStars) savedStars = 0;
-
-document.getElementById("count").innerText =
-  savedStars.toString().padStart(5, "0");
-
-for (let i = 0; i < savedStars; i++) {
-  createStar();
-}
-
-renderPrayers();
-
-form.addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  const name = form.querySelector("input").value || "Anónimo";
-  const message = form.querySelector("textarea").value;
-  if (!message.trim()) return;
-
-  // 🔔 Sonido
-  const sound = document.getElementById("magicSound");
-  sound.currentTime = 0;
-  sound.play().catch(() => {});
-
-  // ✨ Mensaje
-  const msg = document.getElementById("elevatedMessage");
-  msg.style.display = "block";
-  setTimeout(() => {
-    msg.style.display = "none";
-  }, 3000);
-
-  // 🌟 Estrella
-  savedStars++;
-  localStorage.setItem("starsCount", savedStars);
-  document.getElementById("count").innerText =
-    savedStars.toString().padStart(5, "0");
-
-  createStar();
-
-  // 💾 Guardar oración
-  let prayers = JSON.parse(localStorage.getItem("prayers")) || [];
-  prayers.push({ name, message });
-  localStorage.setItem("prayers", JSON.stringify(prayers));
-
-  renderPrayers();
-  form.reset();
-});
-
-function renderPrayers() {
-  const prayers = JSON.parse(localStorage.getItem("prayers")) || [];
-  prayerList.innerHTML = "";
-
-  prayers.slice().reverse().forEach(p => {
-    const div = document.createElement("div");
-    div.style.background = "#fff0f5";
-    div.style.padding = "10px";
-    div.style.margin = "8px 0";
-    div.style.borderRadius = "10px";
-
-    div.innerHTML = `
-      <strong>🌸 ${p.name}</strong><br>
-      ${p.message}
-      <br>
-      <button onclick="amen(this)">🤍 Amén</button>
-      <span class="amenCount">0</span>
-    `;
-
-    prayerList.appendChild(div);
-  });
-}
-
-function amen(btn) {
-  const countSpan = btn.nextElementSibling;
-  let count = parseInt(countSpan.innerText);
-  countSpan.innerText = count + 1;
-}
-
-function createStar() {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.innerHTML = "✦";
-  star.style.left = Math.random() * window.innerWidth + "px";
-  star.style.top = Math.random() * window.innerHeight + "px";
-  starField.appendChild(star);
-}
 /* 🌿 Enviar oración */
-function enviarOracion(){
-  const input = document.getElementById("prayerInput");
-  const texto = input.value;
+function enviarOracion() {
+  const nombre = document.getElementById("nombreInput").value || "Anónimo";
+  const texto = document.getElementById("prayerInput").value;
 
-  if(texto.trim() === "") return;
+  if (!texto.trim()) return;
 
   db.collection("oraciones").add({
+    nombre: nombre,
     texto: texto,
     fecha: firebase.firestore.FieldValue.serverTimestamp()
   });
 
-  input.value = "";
+  document.getElementById("prayerInput").value = "";
+  document.getElementById("nombreInput").value = "";
 }
 
 /* 🌿 Mostrar oraciones en tiempo real */
@@ -243,12 +156,35 @@ db.collection("oraciones")
   prayerBox.innerHTML = "";
 
   snapshot.forEach((doc) => {
-    const oracion = document.createElement("p");
-    oracion.textContent = "🌷 " + doc.data().texto;
-    prayerBox.appendChild(oracion);
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.style.background = "#fff0f5";
+    div.style.padding = "10px";
+    div.style.margin = "8px 0";
+    div.style.borderRadius = "10px";
+
+    div.innerHTML = `
+      <strong>🌸 ${data.nombre}</strong><br>
+      ${data.texto}
+    `;
+
+    prayerBox.appendChild(div);
   });
 
 });
+
+/* 🌟 Estrellas decorativas */
+function createStar() {
+  const star = document.createElement("div");
+  star.className = "star";
+  star.innerHTML = "✦";
+  star.style.left = Math.random() * window.innerWidth + "px";
+  star.style.top = Math.random() * window.innerHeight + "px";
+  document.getElementById("starField").appendChild(star);
+}
+
+setInterval(createStar, 1500);
+
 </script>
 
 </body>
