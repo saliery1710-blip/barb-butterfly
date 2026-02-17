@@ -144,7 +144,7 @@ h1 {
   100%{opacity:0;transform:scale(2);}
 }
 
-/* Sparkles flotantes */
+/* Sparkles */
 .sparkle-container {
   position:fixed;
   width:100%;
@@ -202,6 +202,7 @@ h1 {
 <td class="box">
 
 <h2>🛍 Tienda</h2>
+
 <div class="tienda-card">
 <h3>Devocional “Raíces Firmes”</h3>
 <p>Crecer profundamente en la Palabra 🌷</p>
@@ -209,14 +210,13 @@ h1 {
 <button>Comprar Raíces Firmes</button>
 </a>
 </div>
+
 <div class="tienda-card">
 <h3>✨ Stickers Cristianos ✨</h3>
 <p>Arte con propósito 🎀</p>
-<p style="font-style:italic; color:#ff69b4;">
-Muy pronto en la tienda celestial...
-</p>
 <button disabled style="opacity:0.6;">Coming Soon</button>
 </div>
+
 <h2>🌷 Galería Celestial</h2>
 <div class="tienda-card">
 <input type="file" id="uploadImg" accept="image/*">
@@ -239,26 +239,45 @@ Muy pronto en la tienda celestial...
 🎵 Play Magic
 </button>
 
-<audio id="bgMusic" src="music.mp3" loop></audio>
+<!-- Playlist YouTube Oculta -->
+<div id="player" style="width:0;height:0;overflow:hidden;"></div>
+
 </td>
 
 </tr>
 </table>
 
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
 
-/* Música */
-function toggleMusic(){
-  const music=document.getElementById("bgMusic");
-  const btn=document.getElementById("musicBtn");
+let player;
+let ytPlaying = false;
 
-  if(music.paused){
-    music.volume=0.4;
-    music.play().catch(()=>{});
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '0',
+    width: '0',
+    playerVars: {
+      listType: 'playlist',
+      list: 'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
+      autoplay: 0,
+      controls: 0
+    }
+  });
+}
+
+function toggleMusic(){
+  const btn = document.getElementById("musicBtn");
+
+  if(!ytPlaying){
+    player.playVideo();
     btn.innerText="🌙 Stop Magic";
-  }else{
-    music.pause();
+    ytPlaying = true;
+  } else {
+    player.pauseVideo();
     btn.innerText="🎵 Play Magic";
+    ytPlaying = false;
   }
 }
 
@@ -274,7 +293,7 @@ function crearPetalo(){
 }
 setInterval(crearPetalo,600);
 
-/* Estrellitas cursor */
+/* Cursor estrellas */
 document.addEventListener("mousemove",function(e){
   let star=document.createElement("div");
   star.className="cursor-star";
@@ -284,60 +303,6 @@ document.addEventListener("mousemove",function(e){
   document.body.appendChild(star);
   setTimeout(()=>{star.remove();},800);
 });
-
-/* Galería */
-document.getElementById("uploadImg").addEventListener("change",function(event){
-  const file=event.target.files[0];
-  if(!file)return;
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const img=document.createElement("img");
-    img.src=e.target.result;
-    img.style.width="100%";
-    img.style.marginTop="10px";
-    img.style.borderRadius="15px";
-    img.style.boxShadow="0 0 10px #ffc0ff";
-    document.getElementById("gallery").appendChild(img);
-  };
-  reader.readAsDataURL(file);
-});
-
-/* Chat */
-function enviarMensaje(){
-  const input=document.getElementById("chatInput");
-  const chatBox=document.getElementById("chatBox");
-  if(input.value.trim()==="")return;
-
-  const msg=document.createElement("p");
-  msg.textContent="🌸 "+input.value;
-  msg.style.background="#fff0f5";
-  msg.style.padding="5px";
-  msg.style.borderRadius="10px";
-  msg.style.margin="5px 0";
-
-  chatBox.appendChild(msg);
-
-  let mensajes=JSON.parse(localStorage.getItem("mensajes"))||[];
-  mensajes.push(input.value);
-  localStorage.setItem("mensajes",JSON.stringify(mensajes));
-
-  input.value="";
-}
-
-/* Cargar mensajes */
-window.onload=function(){
-  let mensajes=JSON.parse(localStorage.getItem("mensajes"))||[];
-  const chatBox=document.getElementById("chatBox");
-  mensajes.forEach(texto=>{
-    const msg=document.createElement("p");
-    msg.textContent="🌸 "+texto;
-    msg.style.background="#fff0f5";
-    msg.style.padding="5px";
-    msg.style.borderRadius="10px";
-    msg.style.margin="5px 0";
-    chatBox.appendChild(msg);
-  });
-};
 
 /* Sparkles */
 function createSparkle(){
