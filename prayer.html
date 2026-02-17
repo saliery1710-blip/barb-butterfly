@@ -97,15 +97,17 @@ h1::after {
 <p>Escribí tu pedido y una estrella brillará en el cielo.</p>
 
 <form id="prayerForm">
-<input type="text" placeholder="Tu nombre (opcional)">
-<textarea placeholder="Escribí tu pedido aquí..." required></textarea>
+<form onsubmit="event.preventDefault(); enviarOracion();">
+
+<input type="text" id="nombreInput" placeholder="Tu nombre (opcional)">
+
+<textarea id="prayerInput" placeholder="Escribí tu pedido aquí..." required></textarea>
+
 <button type="submit">Enviar oración</button>
+
 </form>
 
-<div id="elevatedMessage"
-style="display:none; font-weight:bold; color:#ff69b4; margin-top:15px;">
-✨ Tu oración ha sido elevada al cielo ✨
-</div>
+<div id="prayerBox" style="margin-top:20px;"></div>
 
 <div class="prayer-counter">
 Oraciones recibidas: <span id="count">00000</span>
@@ -116,7 +118,16 @@ Oraciones recibidas: <span id="count">00000</span>
 <a href="index.html">⬅ Volver al Portal</a>
 
 </div>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 
+<script>
+  const firebaseConfig = { ... };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
 <script>
 
 const form = document.getElementById("prayerForm");
@@ -208,7 +219,36 @@ function createStar() {
   star.style.top = Math.random() * window.innerHeight + "px";
   starField.appendChild(star);
 }
+/* 🌿 Enviar oración */
+function enviarOracion(){
+  const input = document.getElementById("prayerInput");
+  const texto = input.value;
 
+  if(texto.trim() === "") return;
+
+  db.collection("oraciones").add({
+    texto: texto,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  input.value = "";
+}
+
+/* 🌿 Mostrar oraciones en tiempo real */
+db.collection("oraciones")
+.orderBy("fecha")
+.onSnapshot((snapshot) => {
+
+  const prayerBox = document.getElementById("prayerBox");
+  prayerBox.innerHTML = "";
+
+  snapshot.forEach((doc) => {
+    const oracion = document.createElement("p");
+    oracion.textContent = "🌷 " + doc.data().texto;
+    prayerBox.appendChild(oracion);
+  });
+
+});
 </script>
 
 </body>
