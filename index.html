@@ -5,90 +5,169 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Barb Butterfly</title>
 
-<!-- Fuentes -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
+/* BODY */
 body {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  margin:0;
+  font-family:'Cormorant Garamond', serif;
   background: linear-gradient(-45deg, #ffd6f6, #fce1ff, #e6d0ff, #ffeefc);
   background-size: 400% 400%;
   animation: gradientMove 15s ease infinite;
-  overflow-x: hidden;
+}
+
+h1 {
+  font-family:'Cinzel Decorative', serif;
+  letter-spacing:3px;
+  text-shadow:0 0 10px #ffb6ff, 0 0 20px #ffd6f6;
 }
 
 @keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
 }
 
-h1, h2 {
-  font-family: 'Cinzel Decorative', serif;
-  text-shadow: 0 0 10px #ffb6ff;
+/* Glitter */
+.glitter {
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size:50px 50px;
+  animation: glitterAnim 15s linear infinite;
+  opacity:0.3;
 }
 
-.container {
-  width: 90%;
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 30px;
-  border-radius: 25px;
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 0 40px rgba(255,182,255,0.4);
+@keyframes glitterAnim {
+  from {background-position:0 0;}
+  to {background-position:300px 300px;}
 }
 
-button {
-  background: linear-gradient(135deg,#ffd6f6,#e6d0ff);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-family: 'Cinzel Decorative', serif;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 20px #ffb6ff;
-}
-
-.card {
-  background: white;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
+/* Pétalos */
 .petalo {
-  position: fixed;
-  top: -10px;
-  font-size: 20px;
+  position:fixed;
+  top:-10px;
+  font-size:20px;
   animation: caer linear infinite;
 }
 
 @keyframes caer {
-  0% { transform: translateY(0); opacity:1; }
-  100% { transform: translateY(100vh); opacity:0; }
+  0%{transform:translateY(0);opacity:1;}
+  100%{transform:translateY(100vh);opacity:0;}
 }
 
+/* Tabla */
+.main-table {
+  width:95%;
+  max-width:900px;
+  margin:30px auto;
+  background:#fff8ee;
+  border:5px double #bcd39b;
+}
+
+.banner {
+  height:220px;
+  background: linear-gradient(45deg,#ffd6ec,#e6ffe6);
+  border:4px double #f4b8cd;
+  text-align:center;
+  color:#ff69b4;
+}
+
+.banner h1 {
+  padding-top:60px;
+  font-size:36px;
+}
+
+.box {
+  background:#f8dce6;
+  border:3px solid #bcd39b;
+  padding:10px;
+  transition:0.3s;
+}
+
+.box:hover {
+  transform:scale(1.03);
+  box-shadow:0 0 20px #ffc0ff;
+}
+
+.tienda-card {
+  background:white;
+  padding:15px;
+  margin:10px 0;
+  border-radius:15px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+  text-align:center;
+}
+
+.tienda-card button {
+  background:#ffccf9;
+  border:2px solid #f4b8cd;
+  padding:8px;
+  border-radius:15px;
+  cursor:pointer;
+}
+
+.menu-button {
+  background:#dce9c8;
+  border:2px solid #f4b8cd;
+  padding:6px;
+  margin:5px 0;
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:#6a5d6d;
+  font-weight:bold;
+}
+
+.menu-button:hover {
+  background:#f4b8cd;
+  color:white;
+}
+
+/* Estrellas cursor */
 .cursor-star {
-  position: absolute;
+  position:absolute;
   pointer-events:none;
   font-size:14px;
   color:white;
   text-shadow:0 0 6px #ffb6ff;
-  animation: fadeStar 0.8s forwards;
+  animation:fadeStar 0.8s forwards;
 }
 
 @keyframes fadeStar {
-  from {opacity:1; transform:scale(1);}
-  to {opacity:0; transform:scale(2);}
+  0%{opacity:1;transform:scale(1);}
+  100%{opacity:0;transform:scale(2);}
+}
+
+/* Sparkles flotantes */
+.sparkle-container {
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  top:0;
+  left:0;
+  z-index:9999;
+}
+
+.sparkle {
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation:floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  from{transform:translateY(100vh);opacity:1;}
+  to{transform:translateY(-10vh);opacity:0;}
 }
 
 </style>
@@ -96,69 +175,89 @@ button:hover {
 
 <body>
 
-<div class="container">
+<div class="glitter"></div>
+<div class="sparkle-container"></div>
 
+<table class="main-table" cellspacing="10">
+<tr>
+<td colspan="3">
+<div class="banner">
 <h1>Barb Butterfly</h1>
-<p>Bienvenida al espacio de las hijas ✨</p>
+<p>Bienvenida al espacio de las hijas</p>
+</div>
+</td>
+</tr>
 
-<img src="caricatura.png" style="width:150px;border-radius:50%;box-shadow:0 0 15px #ffc0ff;">
+<tr>
 
-<br><br>
+<td width="200" class="box">
+<h3>Perfil</h3>
+<p>Nombre: Barbara</p>
+<p>Alias: Hija amada de Dios ✨</p>
+<div style="text-align:center;margin-top:10px;">
+<img src="caricatura.png" style="width:120px;border-radius:50%;box-shadow:0 0 15px #ffc0ff;">
+</div>
+</td>
 
-<a href="prayer.html">
-<button>🌸 Prayer Garden</button>
-</a>
-
-<button id="musicBtn">🎵 Activar música</button>
-<audio id="bgMusic" src="music.mp3" loop></audio>
+<td class="box">
 
 <h2>🛍 Tienda</h2>
-
-<div class="card">
+<div class="tienda-card">
 <h3>Devocional “Raíces Firmes”</h3>
 <p>Crecer profundamente en la Palabra 🌷</p>
 <a href="https://TULINKDESYSTEMEIO.com" target="_blank">
-<button>Comprar</button>
+<button>Comprar Raíces Firmes</button>
 </a>
 </div>
 
-<h2>🌷 Galería</h2>
-
-<div class="card">
+<h2>🌷 Galería Celestial</h2>
+<div class="tienda-card">
 <input type="file" id="uploadImg" accept="image/*">
 <div id="gallery"></div>
 </div>
 
 <h2>💌 Libro de Mensajes</h2>
-
-<div class="card">
+<div class="tienda-card">
 <input type="text" id="chatInput" placeholder="Escribe un mensaje..." style="width:100%;padding:5px;">
 <button onclick="enviarMensaje()">Enviar</button>
-<div id="chatBox"></div>
+<div id="chatBox" style="margin-top:10px;"></div>
 </div>
 
-</div>
+</td>
+
+<td width="200" class="box">
+<a href="prayer.html" class="menu-button">Prayer Garden</a>
+
+<button onclick="toggleMusic()" id="musicBtn">
+🎵 Play Magic
+</button>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+</td>
+
+</tr>
+</table>
 
 <script>
 
-// 🎵 Música
-const btn = document.getElementById("musicBtn");
-const music = document.getElementById("bgMusic");
+/* Música */
+function toggleMusic(){
+  const music=document.getElementById("bgMusic");
+  const btn=document.getElementById("musicBtn");
 
-btn.addEventListener("click", function(){
   if(music.paused){
-    music.volume = 0.4;
+    music.volume=0.4;
     music.play().catch(()=>{});
-    btn.innerText = "🌙 Música activada";
-  } else {
+    btn.innerText="🌙 Stop Magic";
+  }else{
     music.pause();
-    btn.innerText = "🎵 Activar música";
+    btn.innerText="🎵 Play Magic";
   }
-});
+}
 
-// 🌸 Pétalos
+/* Pétalos */
 function crearPetalo(){
-  let petalo=document.createElement("div");
+  var petalo=document.createElement("div");
   petalo.classList.add("petalo");
   petalo.innerHTML="🌸";
   petalo.style.left=Math.random()*window.innerWidth+"px";
@@ -166,9 +265,9 @@ function crearPetalo(){
   document.body.appendChild(petalo);
   setTimeout(()=>{petalo.remove();},6000);
 }
-setInterval(crearPetalo,800);
+setInterval(crearPetalo,600);
 
-// ✨ Estrellitas cursor
+/* Estrellitas cursor */
 document.addEventListener("mousemove",function(e){
   let star=document.createElement("div");
   star.className="cursor-star";
@@ -179,14 +278,14 @@ document.addEventListener("mousemove",function(e){
   setTimeout(()=>{star.remove();},800);
 });
 
-// 📸 Galería
-document.getElementById("uploadImg").addEventListener("change",function(e){
-  const file=e.target.files[0];
+/* Galería */
+document.getElementById("uploadImg").addEventListener("change",function(event){
+  const file=event.target.files[0];
   if(!file)return;
   const reader=new FileReader();
-  reader.onload=function(ev){
+  reader.onload=function(e){
     const img=document.createElement("img");
-    img.src=ev.target.result;
+    img.src=e.target.result;
     img.style.width="100%";
     img.style.marginTop="10px";
     img.style.borderRadius="15px";
@@ -196,12 +295,12 @@ document.getElementById("uploadImg").addEventListener("change",function(e){
   reader.readAsDataURL(file);
 });
 
-// 💌 Chat
+/* Chat */
 function enviarMensaje(){
   const input=document.getElementById("chatInput");
+  const chatBox=document.getElementById("chatBox");
   if(input.value.trim()==="")return;
 
-  const chatBox=document.getElementById("chatBox");
   const msg=document.createElement("p");
   msg.textContent="🌸 "+input.value;
   msg.style.background="#fff0f5";
@@ -218,7 +317,7 @@ function enviarMensaje(){
   input.value="";
 }
 
-// cargar mensajes
+/* Cargar mensajes */
 window.onload=function(){
   let mensajes=JSON.parse(localStorage.getItem("mensajes"))||[];
   const chatBox=document.getElementById("chatBox");
@@ -232,6 +331,17 @@ window.onload=function(){
     chatBox.appendChild(msg);
   });
 };
+
+/* Sparkles */
+function createSparkle(){
+  const sparkle=document.createElement("div");
+  sparkle.classList.add("sparkle");
+  sparkle.style.left=Math.random()*100+"vw";
+  sparkle.style.animationDuration=(4+Math.random()*6)+"s";
+  document.querySelector(".sparkle-container").appendChild(sparkle);
+  setTimeout(()=>{sparkle.remove();},10000);
+}
+setInterval(createSparkle,400);
 
 </script>
 
