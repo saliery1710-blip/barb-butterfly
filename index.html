@@ -262,12 +262,24 @@ function onYouTubeIframeAPIReady() {
       listType: 'playlist',
       list: 'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
       autoplay: 0,
-      controls: 0
+      controls: 0,
+      loop: 1
+    },
+    events: {
+      'onReady': function(event){
+        player.setLoop(true); // 🔥 esto fuerza loop de playlist
+      }
     }
   });
 }
 
 function toggleMusic(){
+  player.addEventListener('onStateChange', function(event){
+  // cuando termina una canción
+  if(event.data === YT.PlayerState.ENDED){
+    player.nextVideo();
+  }
+});
   const btn = document.getElementById("musicBtn");
 
   if(!ytPlaying){
