@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Barb Butterfly</title>
@@ -9,8 +11,14 @@
 
 /* Fondo */
 body {
-  margin: 0;
-  font-family: 'Georgia', serif;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+h1 {
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #ffb6ff, 0 0 20px #ffd6f6;
+}
   background: linear-gradient(-45deg, #ffd6f6, #fce1ff, #e6d0ff, #ffeefc);
   background-size: 400% 400%;
   animation: gradientMove 15s ease infinite;
@@ -41,6 +49,16 @@ body {
   0% { opacity: 1; transform: scale(1); }
   80% { opacity: 1; }
   100% { opacity: 0; transform: scale(1.2); visibility: hidden; }
+body {
+  background: linear-gradient(-45deg, #ffe6f5, #e6f0ff, #fce1ff);
+  background-size: 300% 300%;
+  animation: gradientMove 15s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Glitter */
@@ -169,6 +187,21 @@ body {
 .menu-button:hover {
   background: #f4b8cd;
   color: white;
+button {
+  background: linear-gradient(135deg, #ffd6f6, #e6d0ff);
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px #ffc0ff;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px #ffb6ff;
 }
 
 /* Estrellas cursor */
@@ -252,7 +285,17 @@ body {
     transform: translateY(-10vh);
     opacity: 0;
   }
-}                           
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 40px rgba(255, 182, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}                         
 
 </style>
 </head>
@@ -338,16 +381,32 @@ body {
 🎵 Play Magic
 </button>
 
-<audio id="musica" loop>
-<source src="music.mp3" type="audio/mpeg">
-</audio>
+<button id="musicBtn">🌙 Activar música lofi</button>
 
+<audio id="bgMusic" src="music.mp3" loop></audio>
 </td>
 
 </tr>
 </table>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const btn = document.getElementById("musicBtn");
+  const music = document.getElementById("bgMusic");
+
+  if (!btn || !music) return;
+
+  btn.addEventListener("click", function() {
+
+    if (music.paused) {
+      music.volume = 0.4;
+      music.play().catch(() => {});
+      btn.innerText = "🌙 Música activada";
+    } else {
+      music.pause();
+      btn.innerText = "🌙 Activar música lofi";
+    }
 
 /* Música */
 function toggleMusic() {
