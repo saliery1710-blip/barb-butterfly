@@ -372,7 +372,36 @@ function createSparkle(){
   setTimeout(()=>{sparkle.remove();},10000);
 }
 setInterval(createSparkle,400);
+/* 💌 Enviar mensaje a Firebase */
+function enviarMensaje(){
+  const input = document.getElementById("chatInput");
+  const texto = input.value;
 
+  if(texto.trim() === "") return;
+
+  db.collection("mensajes").add({
+    texto: texto,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  input.value = "";
+}
+
+/* 💌 Mostrar mensajes en tiempo real */
+db.collection("mensajes")
+.orderBy("fecha")
+.onSnapshot((snapshot) => {
+
+  const chatBox = document.getElementById("chatBox");
+  chatBox.innerHTML = "";
+
+  snapshot.forEach((doc) => {
+    const mensaje = document.createElement("p");
+    mensaje.textContent = doc.data().texto;
+    chatBox.appendChild(mensaje);
+  });
+
+});
     </script>
 
 </body>
