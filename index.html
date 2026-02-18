@@ -312,7 +312,6 @@ h1 {
 
   const db = firebase.firestore();
   const storage = firebase.storage();
-  <audio id="bg-music" src="music.mp3" loop></audio>
 
 <script>
 const music = document.getElementById("bg-music");
@@ -423,6 +422,22 @@ db.collection("mensajes")
     chatBox.appendChild(mensaje);
   });
 
+<script>
+const music = document.getElementById("bg-music");
+
+if(localStorage.getItem("musicPlaying")==="true"){
+  music.play();
+}
+
+document.addEventListener("click",()=>{
+  music.play();
+},{once:true});
+
+music.addEventListener("play",()=>{
+  localStorage.setItem("musicPlaying","true");
+});
+</script>
+<!-- 🎵 Música Global -->
 <audio id="bg-music" src="music.mp3" loop></audio>
 
 <script>
@@ -439,7 +454,10 @@ document.addEventListener("click",()=>{
 music.addEventListener("play",()=>{
   localStorage.setItem("musicPlaying","true");
 });
-</script>
 
+music.addEventListener("pause",()=>{
+  localStorage.setItem("musicPlaying","false");
+});
+</script>
 </body>
 </html>
