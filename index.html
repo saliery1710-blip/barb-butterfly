@@ -312,7 +312,29 @@ h1 {
 
   const db = firebase.firestore();
   const storage = firebase.storage();
+  <audio id="bg-music" src="music.mp3" loop></audio>
+
+<script>
+const music = document.getElementById("bg-music");
+
+if (localStorage.getItem("musicPlaying") === "true") {
+  music.play();
+}
+
+music.addEventListener("play", () => {
+  localStorage.setItem("musicPlaying", "true");
+});
+
+music.addEventListener("pause", () => {
+  localStorage.setItem("musicPlaying", "false");
+});
+
+// Intentar autoplay al primer click del usuario
+document.addEventListener("click", () => {
+  music.play();
+}, { once: true });
 </script>
+  
 <script>
 
 let player;
