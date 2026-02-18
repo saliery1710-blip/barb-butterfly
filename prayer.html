@@ -65,7 +65,6 @@ button{
 </div>
 
 <!-- 🔔 Sonidos -->
-<audio id="bg-music" src="music.mp3" loop></audio>
 <audio id="ching-sound" src="ching.mp3" preload="auto"></audio>
 
 <!-- 🔥 Firebase -->
@@ -82,20 +81,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* 🎵 Música persistente */
-const music = document.getElementById("bg-music");
-
-if(localStorage.getItem("musicPlaying")==="true"){
-  music.play();
 }
-
-document.addEventListener("click",()=>{
-  music.play();
-},{once:true});
-
-music.addEventListener("play",()=>{
-  localStorage.setItem("musicPlaying","true");
-});
 
 /* 🌿 Enviar oración */
 function enviarOracion(){
