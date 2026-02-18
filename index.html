@@ -1,249 +1,417 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barb Butterfly</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
-body{
-  margin:0;
-  font-family:'Cormorant Garamond', serif;
-  background: linear-gradient(-45deg, #ffd6f6, #fce1ff, #e6d0ff, #ffeefc);
-  background-size:400% 400%;
-  animation:gradientMove 15s ease infinite;
-}
-
-@keyframes gradientMove{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
-.main-table{
-  width:95%;
-  max-width:900px;
-  margin:30px auto;
-  background:#fff8ee;
-  border:5px double #bcd39b;
-}
-
-.banner{
-  height:220px;
-  background:linear-gradient(45deg,#ffd6ec,#e6ffe6);
-  border:4px double #f4b8cd;
-  text-align:center;
-  color:#ff69b4;
-}
-
-.banner h1{
-  padding-top:60px;
-  font-family:'Cinzel Decorative', serif;
-}
-
-.box{
-  background:#f8dce6;
-  border:3px solid #bcd39b;
-  padding:10px;
-}
-
-.menu-button{
-  background:#dce9c8;
-  border:2px solid #f4b8cd;
-  padding:6px;
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  color:#6a5d6d;
-  font-weight:bold;
-}
-
-/* 🌸 RADIO Y2K */
-#radioY2K{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:280px;
-  background:linear-gradient(135deg,#ffd6f6,#e6d0ff);
-  border:3px double #f4b8cd;
-  border-radius:15px;
-  box-shadow:0 0 20px #ffc0ff;
-  z-index:99999;
-  font-family:'Cinzel Decorative', serif;
-}
-
-.radio-header{
-  background:#fff0f5;
-  padding:8px;
-  font-size:14px;
-  border-bottom:2px solid #f4b8cd;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.radio-controls{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  padding:8px;
-}
-
-.radio-btn{
-  background:#ffccf9;
-  border:2px solid #f4b8cd;
-  border-radius:20px;
-  padding:5px 10px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-#player{
-  display:none;
-}
-
-#radioMinimized{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#ffccf9;
-  border:2px solid #f4b8cd;
-  padding:10px 15px;
-  border-radius:20px;
-  cursor:pointer;
-  display:none;
-  z-index:99999;
-}
-</style>
-</head>
-
-<body>
-
-<table class="main-table" cellspacing="10">
-<tr>
-<td colspan="3">
-<div class="banner">
-<h1>Barb Butterfly</h1>
-<p>Bienvenida al espacio de las hijas</p>
-</div>
-</td>
-</tr>
-
-<tr>
-<td width="200" class="box">
-<h3>Perfil</h3>
-<p>Nombre: Barbara</p>
-<p>Alias: Hija amada de Dios ✨</p>
-</td>
-
-<td class="box">
-<h2>💌 Libro de Mensajes</h2>
-<input type="text" id="chatInput" placeholder="Escribe un mensaje..." style="width:100%;padding:5px;">
-<button onclick="enviarMensaje()">Enviar</button>
-<div id="chatBox"></div>
-</td>
-
-<td width="200" class="box">
-<a href="prayer.html" class="menu-button">Prayer Garden</a>
-</td>
-</tr>
-</table>
-
-<!-- 🌸 RADIO -->
-<div id="radioY2K">
-  <div class="radio-header">
-    ✨ Celestial Radio ✨
-    <span onclick="minimizarRadio()" style="cursor:pointer;">—</span>
-  </div>
-
-  <div class="radio-controls">
-    <button class="radio-btn" onclick="playRadio()">▶ Play</button>
-    <button class="radio-btn" onclick="pauseRadio()">⏸ Pause</button>
-  </div>
-
-  <div id="player"></div>
-</div>
-
-<div id="radioMinimized" onclick="abrirRadio()">
-🎵 Abrir Radio
-</div>
-
-<!-- Firebase primero -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
-<script>
-const firebaseConfig={
-  apiKey:"AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
-  authDomain:"barbbutterfly-bc9a6.firebaseapp.com",
-  projectId:"barbbutterfly-bc9a6"
-};
-
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
-
-function enviarMensaje(){
-  const input=document.getElementById("chatInput");
-  if(input.value.trim()==="") return;
-
-  db.collection("mensajes").add({
-    texto:input.value,
-    fecha:firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  input.value="";
-}
-
-db.collection("mensajes")
-.orderBy("fecha")
-.onSnapshot((snapshot)=>{
-  const chatBox=document.getElementById("chatBox");
-  chatBox.innerHTML="";
-  snapshot.forEach((doc)=>{
-    const p=document.createElement("p");
-    p.textContent=doc.data().texto;
-    chatBox.appendChild(p);
-  });
-});
-</script>
-
-<!-- YouTube API -->
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Barb Butterfly</title>  
+  
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">  
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">  
+  
+<style>  
+  
+/* BODY */  
+body {  
+  margin:0;  
+  font-family:'Cormorant Garamond', serif;  
+  background: linear-gradient(-45deg, #ffd6f6, #fce1ff, #e6d0ff, #ffeefc);  
+  background-size: 400% 400%;  
+  animation: gradientMove 15s ease infinite;  
+}  
+  
+h1 {  
+  font-family:'Cinzel Decorative', serif;  
+  letter-spacing:3px;  
+  text-shadow:0 0 10px #ffb6ff, 0 0 20px #ffd6f6;  
+}  
+  
+@keyframes gradientMove {  
+  0%{background-position:0% 50%;}  
+  50%{background-position:100% 50%;}  
+  100%{background-position:0% 50%;}  
+}  
+  
+/* Glitter */  
+.glitter {  
+  position:fixed;  
+  width:100%;  
+  height:100%;  
+  pointer-events:none;  
+  background-image: radial-gradient(white 1px, transparent 1px);  
+  background-size:50px 50px;  
+  animation: glitterAnim 15s linear infinite;  
+  opacity:0.3;  
+}  
+  
+@keyframes glitterAnim {  
+  from {background-position:0 0;}  
+  to {background-position:300px 300px;}  
+}  
+  
+/* Pétalos */  
+.petalo {  
+  position:fixed;  
+  top:-10px;  
+  font-size:20px;  
+  animation: caer linear infinite;  
+}  
+  
+@keyframes caer {  
+  0%{transform:translateY(0);opacity:1;}  
+  100%{transform:translateY(100vh);opacity:0;}  
+}  
+  
+/* Tabla */  
+.main-table {  
+  width:95%;  
+  max-width:900px;  
+  margin:30px auto;  
+  background:#fff8ee;  
+  border:5px double #bcd39b;  
+}  
+  
+.banner {  
+  height:220px;  
+  background: linear-gradient(45deg,#ffd6ec,#e6ffe6);  
+  border:4px double #f4b8cd;  
+  text-align:center;  
+  color:#ff69b4;  
+}  
+  
+.banner h1 {  
+  padding-top:60px;  
+  font-size:36px;  
+}  
+  
+.box {  
+  background:#f8dce6;  
+  border:3px solid #bcd39b;  
+  padding:10px;  
+  transition:0.3s;  
+}  
+  
+.box:hover {  
+  transform:scale(1.03);  
+  box-shadow:0 0 20px #ffc0ff;  
+}  
+  
+.tienda-card {  
+  background:white;  
+  padding:15px;  
+  margin:10px 0;  
+  border-radius:15px;  
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);  
+  text-align:center;  
+}  
+  
+.tienda-card button {  
+  background:#ffccf9;  
+  border:2px solid #f4b8cd;  
+  padding:8px;  
+  border-radius:15px;  
+  cursor:pointer;  
+}  
+  
+.menu-button {  
+  background:#dce9c8;  
+  border:2px solid #f4b8cd;  
+  padding:6px;  
+  margin:5px 0;  
+  display:block;  
+  text-align:center;  
+  text-decoration:none;  
+  color:#6a5d6d;  
+  font-weight:bold;  
+}  
+  
+.menu-button:hover {  
+  background:#f4b8cd;  
+  color:white;  
+}  
+  
+/* Estrellas cursor */  
+.cursor-star {  
+  position:absolute;  
+  pointer-events:none;  
+  font-size:14px;  
+  color:white;  
+  text-shadow:0 0 6px #ffb6ff;  
+  animation:fadeStar 0.8s forwards;  
+}  
+  
+@keyframes fadeStar {  
+  0%{opacity:1;transform:scale(1);}  
+  100%{opacity:0;transform:scale(2);}  
+}  
+  
+/* Sparkles */  
+.sparkle-container {  
+  position:fixed;  
+  width:100%;  
+  height:100%;  
+  pointer-events:none;  
+  top:0;  
+  left:0;  
+  z-index:9999;  
+}  
+  
+.sparkle {  
+  position:absolute;  
+  width:6px;  
+  height:6px;  
+  background:white;  
+  border-radius:50%;  
+  opacity:0.8;  
+  animation:floatUp linear forwards;  
+}  
+  
+@keyframes floatUp {  
+  from{transform:translateY(100vh);opacity:1;}  
+  to{transform:translateY(-10vh);opacity:0;}  
+}  
+/* 🌸 MINI RADIO Y2K */  
+#radioY2K{  
+  position:fixed;  
+  bottom:20px;  
+  right:20px;  
+  width:280px;  
+  background:linear-gradient(135deg,#ffd6f6,#e6d0ff);  
+  border:3px double #f4b8cd;  
+  border-radius:15px;  
+  box-shadow:0 0 20px #ffc0ff;  
+  z-index:99999;  
+  font-family:'Cinzel Decorative', serif;  
+  overflow:hidden;  
+  animation:radioFloat 3s ease-in-out infinite;  
+}  
+  
+.radio-header{  
+  background:#fff0f5;  
+  padding:8px;  
+  text-align:center;  
+  font-size:14px;  
+  border-bottom:2px solid #f4b8cd;  
+  display:flex;  
+  justify-content:space-between;  
+  align-items:center;  
+}  
+  
+#radioY2K iframe{  
+  width:100%;  
+  height:180px;  
+}  
+  
+@keyframes radioFloat{  
+  0%{transform:translateY(0);}  
+  50%{transform:translateY(-5px);}  
+  100%{transform:translateY(0);}  
+}  
+</style>  
+</head>  
+  
+<body>  
+  
+<div class="glitter"></div>  
+<div class="sparkle-container"></div>  
+  
+<table class="main-table" cellspacing="10">  
+<tr>  
+<td colspan="3">  
+<div class="banner">  
+<h1>Barb Butterfly</h1>  
+<p>Bienvenida al espacio de las hijas</p>  
+</div>  
+</td>  
+</tr>  
+  
+<tr>  
+  
+<td width="200" class="box">  
+<h3>Perfil</h3>  
+<p>Nombre: Barbara</p>  
+<p>Alias: Hija amada de Dios ✨</p>  
+<div style="text-align:center;margin-top:10px;">  
+<img src="caricatura.png" style="width:120px;border-radius:50%;box-shadow:0 0 15px #ffc0ff;">  
+</div>  
+</td>  
+  
+<td class="box">  
+  
+<h2>🛍 Tienda</h2>  
+  
+<div class="tienda-card">  
+<h3>Devocional “Raíces Firmes”</h3>  
+<p>Crecer profundamente en la Palabra 🌷</p>  
+<a href="https://TULINKDESYSTEMEIO.com" target="_blank">  
+<button>Comprar Raíces Firmes</button>  
+</a>  
+</div>  
+  
+<div class="tienda-card">  
+<h3>✨ Stickers Cristianos ✨</h3>  
+<p>Arte con propósito 🎀</p>  
+<button disabled style="opacity:0.6;">Coming Soon</button>  
+</div>  
+  
+<h2>🌷 Galería Celestial</h2>  
+<div class="tienda-card">  
+<input type="file" id="uploadImg" accept="image/*">  
+<div id="gallery"></div>  
+</div>  
+  
+<h2>💌 Libro de Mensajes</h2>  
+<div class="tienda-card">  
+<input type="text" id="chatInput" placeholder="Escribe un mensaje..." style="width:100%;padding:5px;">  
+<button onclick="enviarMensaje()">Enviar</button>  
+<div id="chatBox" style="margin-top:10px;"></div>  
+</div>  
+  
+</td>  
+  
+<td width="200" class="box">  
+<a href="prayer.html" class="menu-button">Prayer Garden</a>  
+  
+<!-- Playlist YouTube Oculta -->  
+<div style="margin-top:15px; text-align:center;">  
+  
+<!-- 🌸 Mini Radio Y2K -->  
+<div id="radioY2K">  
+  
+  <div class="radio-header">  
+    ✨ Celestial Radio ✨  
+    <span onclick="toggleRadio()" style="cursor:pointer;">✖</span>  
+  </div>  
+  
+  <div id="player"></div>  
+  
+</div>  
+  
+</td>  
+  
+</tr>  
+</table>  
+  
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
 let player;
 
-function onYouTubeIframeAPIReady(){
-  player = new YT.Player('player',{
-    height:'0',
-    width:'0',
-    playerVars:{
-      listType:'playlist',
-      list:'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
-      autoplay:0,
-      controls:0,
-      modestbranding:1,
-      rel:0
+/* 🌸 YouTube Playlist */
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '180',
+    width: '100%',
+    playerVars: {
+      listType: 'playlist',
+      list: 'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
+      autoplay: 0,
+      controls: 1,
+      modestbranding: 1,
+      rel: 0
     }
   });
 }
 
-function playRadio(){ if(player) player.playVideo(); }
-function pauseRadio(){ if(player) player.pauseVideo(); }
-
-function minimizarRadio(){
-  document.getElementById("radioY2K").style.display="none";
-  document.getElementById("radioMinimized").style.display="block";
+/* 🌸 Cerrar radio */
+function toggleRadio(){
+  const radio = document.getElementById("radioY2K");
+  radio.style.display = "none";
 }
 
-function abrirRadio(){
-  document.getElementById("radioY2K").style.display="block";
-  document.getElementById("radioMinimized").style.display="none";
+/* 🌸 Pétalos */
+function crearPetalo(){
+  var petalo=document.createElement("div");
+  petalo.classList.add("petalo");
+  petalo.innerHTML="🌸";
+  petalo.style.left=Math.random()*window.innerWidth+"px";
+  petalo.style.animationDuration=(Math.random()*3+3)+"s";
+  document.body.appendChild(petalo);
+  setTimeout(()=>{petalo.remove();},6000);
 }
+setInterval(crearPetalo,600);
+
+/* ⭐ Estrellas cursor */
+document.addEventListener("mousemove",function(e){
+  let star=document.createElement("div");
+  star.className="cursor-star";
+  star.innerHTML="✦";
+  star.style.left=e.pageX+"px";
+  star.style.top=e.pageY+"px";
+  document.body.appendChild(star);
+  setTimeout(()=>{star.remove();},800);
+});
+
+/* ✨ Sparkles */
+function createSparkle(){
+  const sparkle=document.createElement("div");
+  sparkle.classList.add("sparkle");
+  sparkle.style.left=Math.random()*100+"vw";
+  sparkle.style.animationDuration=(4+Math.random()*6)+"s";
+  document.querySelector(".sparkle-container").appendChild(sparkle);
+  setTimeout(()=>{sparkle.remove();},10000);
+}
+setInterval(createSparkle,400);
 </script>
-
-</body>
+  
+<script>  
+  
+let player;  
+let ytPlaying = false;  
+  
+function onYouTubeIframeAPIReady() {  
+  player = new YT.Player('player', {  
+    height: '180',  
+    width: '100%',  
+    playerVars: {  
+      listType: 'playlist',  
+      list: 'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',  
+      autoplay: 0,  
+      controls: 1,  
+      modestbranding: 1,  
+      rel: 0  
+    }  
+  });  
+    
+  function toggleRadio(){  
+  const radio = document.getElementById("radioY2K");  
+  radio.style.display = "none";  
+}  
+  
+/* Pétalos */  
+function crearPetalo(){  
+  var petalo=document.createElement("div");  
+  petalo.classList.add("petalo");  
+  petalo.innerHTML="🌸";  
+  petalo.style.left=Math.random()*window.innerWidth+"px";  
+  petalo.style.animationDuration=(Math.random()*3+3)+"s";  
+  document.body.appendChild(petalo);  
+  setTimeout(()=>{petalo.remove();},6000);  
+}  
+setInterval(crearPetalo,600);  
+  
+/* Cursor estrellas */  
+document.addEventListener("mousemove",function(e){  
+  let star=document.createElement("div");  
+  star.className="cursor-star";  
+  star.innerHTML="✦";  
+  star.style.left=e.pageX+"px";  
+  star.style.top=e.pageY+"px";  
+  document.body.appendChild(star);  
+  setTimeout(()=>{star.remove();},800);  
+});  
+  
+/* Sparkles */  
+function createSparkle(){  
+  const sparkle=document.createElement("div");  
+  sparkle.classList.add("sparkle");  
+  sparkle.style.left=Math.random()*100+"vw";  
+  sparkle.style.animationDuration=(4+Math.random()*6)+"s";  
+  document.querySelector(".sparkle-container").appendChild(sparkle);  
+  setTimeout(()=>{sparkle.remove();},10000);  
+}  
+setInterval(createSparkle,400);  
+  
+</script>  
+  
+</body>  
 </html>
