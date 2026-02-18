@@ -73,8 +73,6 @@ body{
   box-shadow:0 0 20px #ffc0ff;
   z-index:99999;
   font-family:'Cinzel Decorative', serif;
-  overflow:hidden;
-  transition:0.3s;
 }
 
 .radio-header{
@@ -173,46 +171,11 @@ body{
 🎵 Abrir Radio
 </div>
 
-<!-- YouTube API -->
-<script src="https://www.youtube.com/iframe_api"></script>
+<!-- Firebase primero -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
-let player;
-
-function onYouTubeIframeAPIReady(){
-  player = new YT.Player('player',{
-    height:'0',
-    width:'0',
-    playerVars:{
-      listType:'playlist',
-      list:'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
-      autoplay:0,
-      controls:0,
-      modestbranding:1,
-      rel:0
-    }
-  });
-}
-
-function playRadio(){
-  if(player) player.playVideo();
-}
-
-function pauseRadio(){
-  if(player) player.pauseVideo();
-}
-
-function minimizarRadio(){
-  document.getElementById("radioY2K").style.display="none";
-  document.getElementById("radioMinimized").style.display="block";
-}
-
-function abrirRadio(){
-  document.getElementById("radioY2K").style.display="block";
-  document.getElementById("radioMinimized").style.display="none";
-}
-
-/* Firebase */
 const firebaseConfig={
   apiKey:"AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
   authDomain:"barbbutterfly-bc9a6.firebaseapp.com",
@@ -247,8 +210,40 @@ db.collection("mensajes")
 });
 </script>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<!-- YouTube API -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+let player;
+
+function onYouTubeIframeAPIReady(){
+  player = new YT.Player('player',{
+    height:'0',
+    width:'0',
+    playerVars:{
+      listType:'playlist',
+      list:'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
+      autoplay:0,
+      controls:0,
+      modestbranding:1,
+      rel:0
+    }
+  });
+}
+
+function playRadio(){ if(player) player.playVideo(); }
+function pauseRadio(){ if(player) player.pauseVideo(); }
+
+function minimizarRadio(){
+  document.getElementById("radioY2K").style.display="none";
+  document.getElementById("radioMinimized").style.display="block";
+}
+
+function abrirRadio(){
+  document.getElementById("radioY2K").style.display="block";
+  document.getElementById("radioMinimized").style.display="none";
+}
+</script>
 
 </body>
-  </html>
+</html>
