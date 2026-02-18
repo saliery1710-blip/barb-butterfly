@@ -132,19 +132,21 @@ const db = firebase.firestore();
 
 /* 🌿 Enviar oración */
 function enviarOracion() {
-  const nombre = document.getElementById("nombreInput").value || "Anónimo";
-  const texto = document.getElementById("prayerInput").value;
-
-  if (!texto.trim()) return;
+  const texto = document.getElementById("oracionInput").value.trim();
+  if (!texto) return;
 
   db.collection("oraciones").add({
-    nombre: nombre,
     texto: texto,
     fecha: firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then(() => {
+    // 🔔 Suena el ching cuando se guardó correctamente
+    document.getElementById("ching-sound").play();
+    document.getElementById("oracionInput").value = "";
+  })
+  .catch((error) => {
+    console.error("Error al guardar:", error);
   });
-
-  document.getElementById("prayerInput").value = "";
-  document.getElementById("nombreInput").value = "";
 }
 
 /* 🌿 Mostrar oraciones en tiempo real */
@@ -184,8 +186,28 @@ function createStar() {
 }
 
 setInterval(createStar, 1500);
+<audio id="bg-music" src="music.mp3" loop></audio>
 
+<script>
+const music = document.getElementById("bg-music");
+
+if (localStorage.getItem("musicPlaying") === "true") {
+  music.play();
+}
+
+music.addEventListener("play", () => {
+  localStorage.setItem("musicPlaying", "true");
+});
+
+music.addEventListener("pause", () => {
+  localStorage.setItem("musicPlaying", "false");
+});
+
+// Intentar autoplay al primer click del usuario
+document.addEventListener("click", () => {
+  music.play();
+}, { once: true });
 </script>
-
+<audio id="ching-sound" src="ching.mp3" preload="auto"></audio>
 </body>
 </html>
