@@ -9,109 +9,64 @@
 
 <style>
 body {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
+  margin:0;
+  font-family:'Cormorant Garamond', serif;
   background: linear-gradient(#ffe6f5, #e6f0ff);
-  color: #6a5d6d;
-  overflow-x: hidden;
+  color:#6a5d6d;
 }
 
-.container {
-  width: 90%;
-  max-width: 800px;
-  margin: 60px auto;
-  background: #fff8ee;
-  border: 5px double #f4b8cd;
-  padding: 30px;
-  text-align: center;
-  border-radius: 20px;
-  position: relative;
-  z-index: 2;
+.container{
+  width:90%;
+  max-width:800px;
+  margin:60px auto;
+  background:#fff8ee;
+  border:5px double #f4b8cd;
+  padding:30px;
+  text-align:center;
+  border-radius:20px;
 }
 
-#starField {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+input, textarea{
+  width:90%;
+  padding:10px;
+  margin:10px 0;
+  border:2px solid #d8b4ff;
+  border-radius:10px;
 }
 
-.star {
-  position: absolute;
-  color: white;
-  font-size: 18px;
-  animation: twinkle 3s infinite alternate;
-  text-shadow: 0 0 8px #fff, 0 0 15px #ffb6ff;
-}
-
-@keyframes twinkle {
-  from { opacity: 0.4; transform: scale(1); }
-  to { opacity: 1; transform: scale(1.3); }
-}
-
-input, textarea {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 2px solid #d8b4ff;
-  border-radius: 10px;
-}
-
-button {
-  background: #ffccf9;
-  border: 2px solid #f4b8cd;
-  padding: 10px 20px;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
-.prayer-counter {
-  margin-top: 20px;
-  font-weight: bold;
-  color: #ff69b4;
-  font-size: 18px;
-}
-
-h1 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 42px;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px #ffb6ff, 0 0 20px #ffd6f6;
-}
-
-h1::after {
-  content: " ✨🌙✨ ";
-  display: block;
-  font-size: 20px;
-  margin-top: 5px;
+button{
+  background:#ffccf9;
+  border:2px solid #f4b8cd;
+  padding:10px 20px;
+  border-radius:15px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="starField"></div>
-
 <div class="container">
 
 <h1>🌸 Prayer Garden ✨</h1>
-<p>Escribí tu pedido y una estrella brillará en el cielo.</p>
 
 <form onsubmit="event.preventDefault(); enviarOracion();">
 
 <input type="text" id="nombreInput" placeholder="Tu nombre (opcional)">
-
-<textarea id="prayerInput" placeholder="Escribí tu pedido aquí..." required></textarea>
-
+<textarea id="prayerInput" placeholder="Escribí tu pedido..." required></textarea>
 <button type="submit">Enviar oración</button>
 
 </form>
 
-<div id="prayerBox" style="margin-top:20px; text-align:left;"></div>
+<div id="prayerBox" style="margin-top:20px;text-align:left;"></div>
 
 <a href="index.html">⬅ Volver al Portal</a>
 
 </div>
+
+<!-- 🔔 Sonidos -->
+<audio id="bg-music" src="music.mp3" loop></audio>
+<audio id="ching-sound" src="ching.mp3" preload="auto"></audio>
 
 <!-- 🔥 Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -119,95 +74,63 @@ h1::after {
 
 <script>
 const firebaseConfig = {
-  apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
+  apiKey: "TU_APIKEY",
   authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
   projectId: "barbbutterfly-bc9a6",
-  storageBucket: "barbbutterfly-bc9a6.firebasestorage.app",
-  messagingSenderId: "1015786068141",
-  appId: "1:1015786068141:web:e6b7b3e5966fad547c8e24"
 };
 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-/* 🌿 Enviar oración */
-function enviarOracion() {
-  const texto = document.getElementById("oracionInput").value.trim();
-  if (!texto) return;
-
-  db.collection("oraciones").add({
-    texto: texto,
-    fecha: firebase.firestore.FieldValue.serverTimestamp()
-  })
-  .then(() => {
-    // 🔔 Suena el ching cuando se guardó correctamente
-    document.getElementById("ching-sound").play();
-    document.getElementById("oracionInput").value = "";
-  })
-  .catch((error) => {
-    console.error("Error al guardar:", error);
-  });
-}
-
-/* 🌿 Mostrar oraciones en tiempo real */
-db.collection("oraciones")
-.orderBy("fecha")
-.onSnapshot((snapshot) => {
-
-  const prayerBox = document.getElementById("prayerBox");
-  prayerBox.innerHTML = "";
-
-  snapshot.forEach((doc) => {
-    const data = doc.data();
-    const div = document.createElement("div");
-    div.style.background = "#fff0f5";
-    div.style.padding = "10px";
-    div.style.margin = "8px 0";
-    div.style.borderRadius = "10px";
-
-    div.innerHTML = `
-      <strong>🌸 ${data.nombre}</strong><br>
-      ${data.texto}
-    `;
-
-    prayerBox.appendChild(div);
-  });
-
-});
-
-/* 🌟 Estrellas decorativas */
-function createStar() {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.innerHTML = "✦";
-  star.style.left = Math.random() * window.innerWidth + "px";
-  star.style.top = Math.random() * window.innerHeight + "px";
-  document.getElementById("starField").appendChild(star);
-}
-
-setInterval(createStar, 1500);
-<audio id="bg-music" src="music.mp3" loop></audio>
-
-<script>
+/* 🎵 Música persistente */
 const music = document.getElementById("bg-music");
 
-if (localStorage.getItem("musicPlaying") === "true") {
+if(localStorage.getItem("musicPlaying")==="true"){
   music.play();
 }
 
-music.addEventListener("play", () => {
-  localStorage.setItem("musicPlaying", "true");
-});
-
-music.addEventListener("pause", () => {
-  localStorage.setItem("musicPlaying", "false");
-});
-
-// Intentar autoplay al primer click del usuario
-document.addEventListener("click", () => {
+document.addEventListener("click",()=>{
   music.play();
-}, { once: true });
+},{once:true});
+
+music.addEventListener("play",()=>{
+  localStorage.setItem("musicPlaying","true");
+});
+
+/* 🌿 Enviar oración */
+function enviarOracion(){
+  const nombre = document.getElementById("nombreInput").value.trim();
+  const texto = document.getElementById("prayerInput").value.trim();
+  if(!texto) return;
+
+  db.collection("oraciones").add({
+    nombre: nombre || "Anónimo",
+    texto: texto,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  }).then(()=>{
+    document.getElementById("ching-sound").play();
+    document.getElementById("prayerInput").value="";
+  });
+}
+
+/* 🌿 Mostrar oraciones */
+db.collection("oraciones")
+.orderBy("fecha")
+.onSnapshot((snapshot)=>{
+  const box=document.getElementById("prayerBox");
+  box.innerHTML="";
+  snapshot.forEach((doc)=>{
+    const data=doc.data();
+    const div=document.createElement("div");
+    div.style.background="#fff0f5";
+    div.style.padding="10px";
+    div.style.margin="8px 0";
+    div.style.borderRadius="10px";
+    div.innerHTML=`<strong>🌸 ${data.nombre}</strong><br>${data.texto}`;
+    box.appendChild(div);
+  });
+});
 </script>
-<audio id="ching-sound" src="ching.mp3" preload="auto"></audio>
+
 </body>
 </html>
