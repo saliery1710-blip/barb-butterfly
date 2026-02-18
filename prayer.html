@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barb Butterfly</title>
+<title>Prayer Garden</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
 
@@ -13,125 +13,111 @@ body {
   font-family: 'Cormorant Garamond', serif;
   background: linear-gradient(#ffe6f5, #e6f0ff);
   color: #6a5d6d;
-  text-align: center;
+  overflow-x: hidden;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  gap: 10px;
   width: 90%;
-  max-width: 1000px;
-  margin: 40px auto;
-  border: 2px solid #e6d6f0;
-  padding: 20px;
-  background: #ffe6f5;
-  border-radius: 15px;
+  max-width: 800px;
+  margin: 60px auto;
+  background: #fff8ee;
+  border: 5px double #f4b8cd;
+  padding: 30px;
+  text-align: center;
+  border-radius: 20px;
+  position: relative;
+  z-index: 2;
 }
 
-h1 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 36px;
-  text-shadow: 0 0 10px #ffb6ff, 0 0 20px #ffd6f6;
-  margin-bottom: 10px;
+#starField {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
-/* Galería Celestial */
-#celestialGallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 10px;
+.star {
+  position: absolute;
+  color: white;
+  font-size: 18px;
+  animation: twinkle 3s infinite alternate;
+  text-shadow: 0 0 8px #fff, 0 0 15px #ffb6ff;
 }
 
-#celestialGallery img {
-  width: 120px;
-  margin: 5px;
-  border-radius: 10px;
-  border: 2px solid #f4b8cd;
+@keyframes twinkle {
+  from { opacity: 0.4; transform: scale(1); }
+  to { opacity: 1; transform: scale(1.3); }
 }
 
-/* Inputs y botones */
-input, textarea, button {
-  padding: 8px;
-  margin: 5px 0;
-  border-radius: 10px;
+input, textarea {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
   border: 2px solid #d8b4ff;
-  font-family: inherit;
+  border-radius: 10px;
 }
 
 button {
   background: #ffccf9;
+  border: 2px solid #f4b8cd;
+  padding: 10px 20px;
+  border-radius: 15px;
   cursor: pointer;
 }
 
-.profile img {
-  width: 100px;
-  border-radius: 50%;
-  border: 2px solid #f4b8cd;
+.prayer-counter {
+  margin-top: 20px;
+  font-weight: bold;
+  color: #ff69b4;
+  font-size: 18px;
+}
+
+h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 42px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px #ffb6ff, 0 0 20px #ffd6f6;
+}
+
+h1::after {
+  content: " ✨🌙✨ ";
+  display: block;
+  font-size: 20px;
+  margin-top: 5px;
 }
 </style>
 </head>
 
 <body>
 
-<h1>BARB BUTTERFLY</h1>
-<p>Bienvenida al espacio de las hijas</p>
+<div id="starField"></div>
 
 <div class="container">
-  <!-- Perfil -->
-  <div class="profile">
-    <p><strong>Nombre:</strong> Barbara</p>
-    <p><strong>Alias:</strong> Hija amada de Dios ✨</p>
-    <img src="perfil.jpg" alt="Perfil">
-  </div>
 
-  <!-- Centro: Tienda, Galería, Libro de Mensajes -->
-  <div>
-    <!-- Tienda -->
-    <div>
-      <h2>🎁 Tienda</h2>
-      <div style="background:#fff; padding:10px; margin:5px; border-radius:10px;">
-        <p><strong>Devocional “Raíces Firmes”</strong></p>
-        <p>Crecer profundamente en la Palabra 🌹</p>
-        <button>Comprar Raíces Firmes</button>
-      </div>
-      <div style="background:#fff; padding:10px; margin:5px; border-radius:10px;">
-        <p>✨ Stickers Cristianos ✨</p>
-        <p>Arte con propósito 🎀</p>
-        <button disabled>Coming Soon</button>
-      </div>
-    </div>
+<h1>🌸 Prayer Garden ✨</h1>
+<p>Escribí tu pedido y una estrella brillará en el cielo.</p>
 
-    <!-- Galería Celestial -->
-    <div>
-      <h2>🌹 Galería Celestial</h2>
-      <input type="file" id="uploadImage">
-      <div id="celestialGallery"></div>
-    </div>
+<form onsubmit="event.preventDefault(); enviarOracion();">
 
-    <!-- Libro de Mensajes -->
-    <div>
-      <h2>💌 Libro de Mensajes</h2>
-      <input type="text" id="mensajeInput" placeholder="Escribe un mensaje...">
-      <button onclick="enviarMensaje()">Enviar</button>
-      <div id="mensajeBox" style="margin-top:10px;"></div>
-    </div>
-  </div>
+<input type="text" id="nombreInput" placeholder="Tu nombre (opcional)">
 
-  <!-- Botón Prayer Garden -->
-  <div>
-    <button onclick="location.href='prayergarden.html'">Prayer Garden</button>
-  </div>
+<textarea id="prayerInput" placeholder="Escribí tu pedido aquí..." required></textarea>
+
+<button type="submit">Enviar oración</button>
+
+</form>
+
+<div id="prayerBox" style="margin-top:20px; text-align:left;"></div>
+
+<a href="index.html">⬅ Volver al Portal</a>
+
 </div>
 
 <!-- 🔥 Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 
 <script>
-// 🔹 Config Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
   authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
@@ -140,63 +126,66 @@ const firebaseConfig = {
   messagingSenderId: "1015786068141",
   appId: "1:1015786068141:web:e6b7b3e5966fad547c8e24"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-const storage = firebase.storage();
 
-// 📷 Subida de imágenes (pendiente)
-document.getElementById('uploadImage').addEventListener('change', async (e)=>{
-  const file = e.target.files[0];
-  if(!file) return;
+/* 🌿 Enviar oración */
+function enviarOracion() {
+  const nombre = document.getElementById("nombreInput").value || "Anónimo";
+  const texto = document.getElementById("prayerInput").value;
 
-  const storageRef = storage.ref('pending/' + file.name);
-  await storageRef.put(file);
-  alert("Imagen subida y pendiente de moderación");
-});
+  if (!texto.trim()) return;
 
-// 🌟 Cargar galería aprobada
-function loadGallery() {
-  const galleryDiv = document.getElementById('celestialGallery');
-  const approvedRef = storage.ref('approved/');
-  approvedRef.listAll().then(res=>{
-    galleryDiv.innerHTML = "";
-    res.items.forEach(itemRef=>{
-      itemRef.getDownloadURL().then(url=>{
-        const img = document.createElement('img');
-        img.src = url;
-        galleryDiv.appendChild(img);
-      });
-    });
-  });
-}
-window.onload = loadGallery;
-
-// 💌 Libro de mensajes
-function enviarMensaje() {
-  const texto = document.getElementById('mensajeInput').value.trim();
-  if(!texto) return;
-
-  db.collection('mensajes').add({
+  db.collection("oraciones").add({
+    nombre: nombre,
     texto: texto,
     fecha: firebase.firestore.FieldValue.serverTimestamp()
   });
-  document.getElementById('mensajeInput').value = "";
+
+  document.getElementById("prayerInput").value = "";
+  document.getElementById("nombreInput").value = "";
 }
 
-db.collection('mensajes').orderBy('fecha').onSnapshot(snapshot=>{
-  const box = document.getElementById('mensajeBox');
-  box.innerHTML = "";
-  snapshot.forEach(doc=>{
-    const data = doc.data();
-    const div = document.createElement('div');
-    div.textContent = data.texto;
-    box.appendChild(div);
-  });
-});
-</script>
+/* 🌿 Mostrar oraciones en tiempo real */
+db.collection("oraciones")
+.orderBy("fecha")
+.onSnapshot((snapshot) => {
 
-<!-- 🎵 Música continua -->
-<audio id="bg-music" src="music.mp3" loop autoplay></audio>
+  const prayerBox = document.getElementById("prayerBox");
+  prayerBox.innerHTML = "";
+
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+    const div = document.createElement("div");
+    div.style.background = "#fff0f5";
+    div.style.padding = "10px";
+    div.style.margin = "8px 0";
+    div.style.borderRadius = "10px";
+
+    div.innerHTML = `
+      <strong>🌸 ${data.nombre}</strong><br>
+      ${data.texto}
+    `;
+
+    prayerBox.appendChild(div);
+  });
+
+});
+
+/* 🌟 Estrellas decorativas */
+function createStar() {
+  const star = document.createElement("div");
+  star.className = "star";
+  star.innerHTML = "✦";
+  star.style.left = Math.random() * window.innerWidth + "px";
+  star.style.top = Math.random() * window.innerHeight + "px";
+  document.getElementById("starField").appendChild(star);
+}
+
+setInterval(createStar, 1500);
+
+</script>
 
 </body>
 </html>
