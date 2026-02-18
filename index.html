@@ -417,7 +417,36 @@ function createSparkle(){
 }  
 setInterval(createSparkle,400);  
   
-</script>  
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
+  authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
+  projectId: "barbbutterfly-bc9a6",
+  storageBucket: "barbbutterfly-bc9a6.firebasestorage.app",
+  messagingSenderId: "1015786068141",
+  appId: "1:1015786068141:web:febea20507b705687c8e24",
+  measurementId: "G-HQE906KL7C"
+};
+ firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const galleryContainer = document.getElementById("gallery");
+
+db.collection("galeria")
+.onSnapshot((snapshot)=>{
+  galleryContainer.innerHTML="";
   
+  snapshot.forEach((doc)=>{
+    const data = doc.data();
+    
+    const img = document.createElement("img");
+    img.src = data.imagenUrl;
+    img.style.width = "100%";
+    img.style.borderRadius = "10px";
+    img.style.boxShadow = "0 0 10px #ffc0ff";
+    
+    galleryContainer.appendChild(img);
+  });
+</script>  
+ 
 </body>  
 </html>
