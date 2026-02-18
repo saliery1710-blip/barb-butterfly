@@ -423,9 +423,23 @@ db.collection("mensajes")
     chatBox.appendChild(mensaje);
   });
 
+<audio id="bg-music" src="music.mp3" loop></audio>
+
+<script>
+const music = document.getElementById("bg-music");
+
+if(localStorage.getItem("musicPlaying")==="true"){
+  music.play();
+}
+
+document.addEventListener("click",()=>{
+  music.play();
+},{once:true});
+
+music.addEventListener("play",()=>{
+  localStorage.setItem("musicPlaying","true");
 });
-  <audio id="ching" src="ching.mp3"></audio>
-    </script>
+</script>
 
 </body>
 </html>
