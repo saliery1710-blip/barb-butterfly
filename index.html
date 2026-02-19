@@ -21,6 +21,37 @@ body{
   100%{background-position:0% 50%;}
 }
 
+/* EFECTOS */
+#particles-js{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-2;
+}
+
+.flores{
+  position:fixed;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:-1;
+}
+
+.flor{
+  position:absolute;
+  top:-50px;
+  animation:caer linear infinite;
+  opacity:0.8;
+}
+
+@keyframes caer{
+  0%{transform:translateY(0) rotate(0deg);}
+  100%{transform:translateY(110vh) rotate(360deg);}
+}
+
 h1{
   font-family:'Cinzel Decorative',serif;
   letter-spacing:3px;
@@ -103,6 +134,9 @@ h1{
 
 <body>
 
+<div id="particles-js"></div>
+<div class="flores"></div>
+
 <table class="main-table" cellspacing="10">
 <tr>
 <td colspan="3">
@@ -149,7 +183,6 @@ h1{
 <div id="mensajes"></div>
 
 <h2>🌷 Galería Celestial</h2>
-  <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Cielo.jpg" width="300">
 <div id="gallery" style="
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
@@ -186,6 +219,36 @@ function onYouTubeIframeAPIReady(){
 }
 </script>
 
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 50 },
+    size: { value: 3 },
+    move: { speed: 0.6 },
+    opacity: { value: 0.5 },
+    line_linked: { enable: false }
+  }
+});
+
+/* FLORES */
+const floresContainer = document.querySelector(".flores");
+
+function crearFlor(){
+  const flor = document.createElement("div");
+  flor.classList.add("flor");
+  flor.innerHTML = ["🌸","🌷","🦋","🩷","⭐️"][Math.floor(Math.random()*3)];
+  flor.style.left = Math.random()*100 + "vw";
+  flor.style.animationDuration = (6 + Math.random()*6) + "s";
+  flor.style.fontSize = (15 + Math.random()*20) + "px";
+  floresContainer.appendChild(flor);
+
+  setTimeout(()=>{flor.remove();},12000);
+}
+
+setInterval(crearFlor,900);
+</script>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -198,6 +261,7 @@ const firebaseConfig={
 
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
+
 function enviarMensaje(){
   const nombre = document.getElementById("nombre").value;
   const texto = document.getElementById("texto").value;
@@ -216,7 +280,7 @@ function enviarMensaje(){
   document.getElementById("nombre").value="";
   document.getElementById("texto").value="";
 }
-/* Libro de Mensajes */
+
 db.collection("mensajes").orderBy("fecha")
 .onSnapshot((snapshot)=>{
   const cont=document.getElementById("mensajes");
@@ -230,10 +294,6 @@ db.collection("mensajes").orderBy("fecha")
   });
 });
 
-/* Galería */
-  db.collection("galeria").onSnapshot((snapshot)=>{
-  console.log("Cantidad de imágenes:", snapshot.size);
-});
 db.collection("galeria").onSnapshot((snapshot)=>{
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";
