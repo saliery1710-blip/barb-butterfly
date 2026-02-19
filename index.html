@@ -149,6 +149,7 @@ h1{
 <div id="mensajes"></div>
 
 <h2>🌷 Galería Celestial</h2>
+  <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Cielo.jpg" width="300">
 <div id="gallery" style="
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
@@ -230,6 +231,9 @@ db.collection("mensajes").orderBy("fecha")
 });
 
 /* Galería */
+  db.collection("galeria").onSnapshot((snapshot)=>{
+  console.log("Cantidad de imágenes:", snapshot.size);
+});
 db.collection("galeria").onSnapshot((snapshot)=>{
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";
