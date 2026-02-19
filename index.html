@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-/* ================= BODY ================= */
 body{
   margin:0;
   font-family:'Cormorant Garamond', serif;
@@ -28,7 +27,6 @@ h1{
   text-shadow:0 0 10px #ffb6ff;
 }
 
-/* ================= TABLA ================= */
 .main-table{
   width:95%;
   max-width:900px;
@@ -36,6 +34,7 @@ h1{
   background:#fff8ee;
   border:5px double #bcd39b;
 }
+
 .banner{
   height:220px;
   background:linear-gradient(45deg,#ffd6ec,#e6ffe6);
@@ -72,7 +71,14 @@ h1{
   font-weight:bold;
 }
 
-/* ================= RADIO ================= */
+.mensaje-card{
+  background:#fff0f5;
+  padding:8px;
+  margin:6px 0;
+  border-radius:10px;
+}
+
+/* RADIO */
 #radioY2K{
   position:fixed;
   bottom:20px;
@@ -111,7 +117,8 @@ h1{
 
 <td width="200" class="box">
 <h3>Perfil</h3>
-<p>Nombre: Barbara</p>
+<p><strong>Nombre:</strong> Barbara</p>
+<p><strong>Alias:</strong> Hija amada de Dios</p>
 <img src="caricatura.png" width="120">
 </td>
 
@@ -124,6 +131,22 @@ h1{
 <button>Comprar</button>
 </a>
 </div>
+
+<h2>📖 Libro de Mensajes</h2>
+
+<div style="margin-bottom:15px;">
+  <input type="text" id="nombre" placeholder="Tu nombre" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:1px solid #ccc;">
+  
+  <textarea id="texto" placeholder="Escribe tu mensaje..." 
+  style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;"></textarea>
+  
+  <button onclick="enviarMensaje()" 
+  style="margin-top:8px;padding:8px 15px;border:none;border-radius:10px;background:#dce9c8;font-weight:bold;">
+  Enviar ✨
+  </button>
+</div>
+
+<div id="mensajes"></div>
 
 <h2>🌷 Galería Celestial</h2>
 <div id="gallery" style="
@@ -140,7 +163,7 @@ gap:10px;"></div>
 </tr>
 </table>
 
-<!-- ================= RADIO YOUTUBE ================= -->
+<!-- RADIO -->
 <div id="radioY2K">
   <div class="radio-header">
     ✨ Celestial Radio
@@ -162,7 +185,6 @@ function onYouTubeIframeAPIReady(){
 }
 </script>
 
-<!-- ================= FIREBASE ================= -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
@@ -175,7 +197,39 @@ const firebaseConfig={
 
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
+function enviarMensaje(){
+  const nombre = document.getElementById("nombre").value;
+  const texto = document.getElementById("texto").value;
 
+  if(nombre === "" || texto === ""){
+    alert("Completa ambos campos 💕");
+    return;
+  }
+
+  db.collection("mensajes").add({
+    nombre: nombre,
+    texto: texto,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  document.getElementById("nombre").value="";
+  document.getElementById("texto").value="";
+}
+/* Libro de Mensajes */
+db.collection("mensajes").orderBy("fecha")
+.onSnapshot((snapshot)=>{
+  const cont=document.getElementById("mensajes");
+  cont.innerHTML="";
+  snapshot.forEach((doc)=>{
+    const data=doc.data();
+    const div=document.createElement("div");
+    div.className="mensaje-card";
+    div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
+    cont.appendChild(div);
+  });
+});
+
+/* Galería */
 db.collection("galeria").onSnapshot((snapshot)=>{
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";
