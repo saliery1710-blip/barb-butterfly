@@ -256,14 +256,12 @@ h1 {
 <h2>🌷 Galería Celestial</h2>  
 <div class="tienda-card">  
 <input type="file" id="uploadImg" accept="image/*">  
-<div id="gallery"></div> 
-  <div id="gallery" style="
+<div id="gallery" style="
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
   gap:10px;
   margin-top:10px;">
-  </div>
-</div>  
+</div>
   
 <h2>💌 Libro de Mensajes</h2>  
 <div class="tienda-card">  
@@ -404,20 +402,14 @@ document.addEventListener("mousemove",function(e){
   star.style.top=e.pageY+"px";  
   document.body.appendChild(star);  
   setTimeout(()=>{star.remove();},800);  
-});  
-  
-/* Sparkles */  
-function createSparkle(){  
-  const sparkle=document.createElement("div");  
-  sparkle.classList.add("sparkle");  
-  sparkle.style.left=Math.random()*100+"vw";  
-  sparkle.style.animationDuration=(4+Math.random()*6)+"s";  
-  document.querySelector(".sparkle-container").appendChild(sparkle);  
-  setTimeout(()=>{sparkle.remove();},10000);  
-}  
-setInterval(createSparkle,400);  
-  
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <script>
+/* =========================
+   🔥 FIREBASE CONFIG
+========================= */
 const firebaseConfig = {
   apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
   authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
@@ -427,9 +419,78 @@ const firebaseConfig = {
   appId: "1:1015786068141:web:febea20507b705687c8e24",
   measurementId: "G-HQE906KL7C"
 };
- firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  const galleryContainer = document.getElementById("gallery");
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* =========================
+   🌸 YOUTUBE RADIO
+========================= */
+let player;
+
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    height: '180',
+    width: '100%',
+    playerVars: {
+      listType: 'playlist',
+      list: 'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
+      autoplay: 0,
+      controls: 1,
+      modestbranding: 1,
+      rel: 0
+    }
+  });
+}
+
+function toggleRadio(){
+  document.getElementById("radioY2K").style.display = "none";
+}
+
+/* =========================
+   🌸 PÉTALOS
+========================= */
+function crearPetalo(){
+  const petalo=document.createElement("div");
+  petalo.classList.add("petalo");
+  petalo.innerHTML="🌸";
+  petalo.style.left=Math.random()*window.innerWidth+"px";
+  petalo.style.animationDuration=(Math.random()*3+3)+"s";
+  document.body.appendChild(petalo);
+  setTimeout(()=>{petalo.remove();},6000);
+}
+setInterval(crearPetalo,600);
+
+/* =========================
+   ⭐ ESTRELLAS CURSOR
+========================= */
+document.addEventListener("mousemove",function(e){
+  const star=document.createElement("div");
+  star.className="cursor-star";
+  star.innerHTML="✦";
+  star.style.left=e.pageX+"px";
+  star.style.top=e.pageY+"px";
+  document.body.appendChild(star);
+  setTimeout(()=>{star.remove();},800);
+});
+
+/* =========================
+   ✨ SPARKLES
+========================= */
+function createSparkle(){
+  const sparkle=document.createElement("div");
+  sparkle.classList.add("sparkle");
+  sparkle.style.left=Math.random()*100+"vw";
+  sparkle.style.animationDuration=(4+Math.random()*6)+"s";
+  document.querySelector(".sparkle-container").appendChild(sparkle);
+  setTimeout(()=>{sparkle.remove();},10000);
+}
+setInterval(createSparkle,400);
+
+/* =========================
+   🌷 GALERÍA FIRESTORE
+========================= */
+const galleryContainer = document.getElementById("gallery");
 
 db.collection("galeria")
 .onSnapshot((snapshot)=>{
@@ -441,11 +502,12 @@ db.collection("galeria")
     const img = document.createElement("img");
     img.src = data.imagenUrl;
     img.style.width = "100%";
-    img.style.borderRadius = "10px";
-    img.style.boxShadow = "0 0 10px #ffc0ff";
+    img.style.borderRadius = "12px";
+    img.style.boxShadow = "0 0 12px #ffc0ff";
     
     galleryContainer.appendChild(img);
   });
+});
 </script>  
  
 </body>  
