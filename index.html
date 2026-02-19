@@ -135,6 +135,28 @@ h1{
   justify-content:space-between;
 }
 #player{height:180px;}
+  /* BOTÓN FLOTANTE RADIO */
+#radioButton{
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ffd6f6,#e6d0ff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 0 20px #ffc0ff;
+  z-index:9999;
+  transition:transform 0.3s ease;
+}
+
+#radioButton:hover{
+  transform:scale(1.1);
+}
 </style>
 </head>
 
@@ -190,11 +212,26 @@ h1{
 
 <h2>🌷 Galería Celestial</h2>
 <div id="gallery" style="
-  <h3>PRUEBA</h3>
+ <h3>PRUEBA</h3>
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
 gap:10px;"></div>
+<h2>💖 Testimonios</h2>
 
+<div style="margin-bottom:15px;">
+  <input type="text" id="nombreTestimonio" placeholder="Tu nombre"
+  style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:1px solid #ccc;">
+
+  <textarea id="textoTestimonio" placeholder="Escribe tu testimonio..."
+  style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;"></textarea>
+
+  <button onclick="enviarTestimonio()"
+  style="margin-top:8px;padding:8px 15px;border:none;border-radius:10px;background:#ffd6ec;font-weight:bold;">
+  Enviar Testimonio ✨
+  </button>
+</div>
+
+<div id="testimonios"></div>
 </td>
 
 <td width="200" class="box">
@@ -205,10 +242,16 @@ gap:10px;"></div>
 </table>
 
 <!-- RADIO -->
-<div id="radioY2K">
+<!-- BOTÓN FLOTANTE -->
+<div id="radioButton" onclick="toggleRadio()">
+  🎵
+</div>
+
+<!-- RADIO PANEL -->
+<div id="radioY2K" style="display:none;">
   <div class="radio-header">
     ✨ Celestial Radio
-    <span onclick="document.getElementById('radioY2K').style.display='none'">✖</span>
+    <span onclick="toggleRadio()">✖</span>
   </div>
   <div id="player"></div>
 </div>
@@ -223,6 +266,14 @@ function onYouTubeIframeAPIReady(){
       controls:1
     }
   });
+<script>
+function toggleRadio(){
+  const radio = document.getElementById("radioY2K");
+  if(radio.style.display === "none"){
+    radio.style.display = "block";
+  } else {
+    radio.style.display = "none";
+  }
 }
 </script>
 
@@ -270,6 +321,47 @@ firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 
 function enviarMensaje(){
+
+/* 👇 PEGA AQUÍ LO DE TESTIMONIOS 👇 */
+
+function enviarTestimonio(){
+  const nombre = document.getElementById("nombreTestimonio").value;
+  const texto = document.getElementById("textoTestimonio").value;
+
+  if(nombre === "" || texto === ""){
+    alert("Completa ambos campos 💕");
+    return;
+  }
+
+  db.collection("testimonios").add({
+    nombre: nombre,
+    texto: texto,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  document.getElementById("nombreTestimonio").value="";
+  document.getElementById("textoTestimonio").value="";
+}
+
+db.collection("testimonios").orderBy("fecha")
+.onSnapshot((snapshot)=>{
+  const cont=document.getElementById("testimonios");
+  cont.innerHTML="";
+  snapshot.forEach((doc)=>{
+    const data=doc.data();
+    const div=document.createElement("div");
+    div.className="mensaje-card";
+    div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
+    cont.appendChild(div);
+  });
+});
+
+/* 👆 FIN TESTIMONIOS 👆 */
+
+db.collection("mensajes").orderBy("fecha")
+.onSnapshot((snapshot)=>{
+   ...
+});
   const nombre = document.getElementById("nombre").value;
   const texto = document.getElementById("texto").value;
 
