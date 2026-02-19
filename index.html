@@ -256,15 +256,31 @@ gap:10px;"></div>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
+
 <script>
+let player;
+
 function onYouTubeIframeAPIReady(){
-  new YT.Player('player',{
+  player = new YT.Player('player',{
+    height:'180',
+    width:'280',
     playerVars:{
       listType:'playlist',
       list:'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
       controls:1
     }
   });
+}
+
+function toggleRadio(){
+  const radio = document.getElementById("radioY2K");
+
+  if(radio.style.display === "none"){
+    radio.style.display = "block";
+  } else {
+    radio.style.display = "none";
+  }
+}
 </script>
   <script>
 function toggleRadio(){
