@@ -434,22 +434,23 @@ db.collection("testimonios").orderBy("fecha")
 
 /* ================= GALERÍA ================= */
 
-db.collection("galeria").onSnapshot((snapshot)=>{
-  const gallery = document.getElementById("gallery");
-  if(!gallery) return;
+const gallery = document.getElementById("gallery");
 
-  gallery.innerHTML="";
+db.collection("galeria")
+.orderBy("orden")
+.onSnapshot((snapshot) => {
 
-  snapshot.forEach((doc)=>{
+  gallery.innerHTML = ""; // limpia antes de volver a dibujar
+
+  snapshot.forEach((doc) => {
     const data = doc.data();
-    if(!data.imagenUrl) return;
 
     const img = document.createElement("img");
     img.src = data.imagenUrl;
-    img.style.width="100%";
-    img.style.borderRadius="12px";
+
     gallery.appendChild(img);
   });
+
 });
 </script>
 
