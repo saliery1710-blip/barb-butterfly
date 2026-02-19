@@ -212,7 +212,6 @@ h1{
 
 <h2>🌷 Galería Celestial</h2>
 <div id="gallery" style="
- <h3>PRUEBA</h3>
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
 gap:10px;"></div>
@@ -266,7 +265,8 @@ function onYouTubeIframeAPIReady(){
       controls:1
     }
   });
-<script>
+</script>
+  <script>
 function toggleRadio(){
   const radio = document.getElementById("radioY2K");
   if(radio.style.display === "none"){
@@ -320,10 +320,40 @@ const firebaseConfig={
 firebase.initializeApp(firebaseConfig);
 const db=firebase.firestore();
 
+/* MENSAJES */
 function enviarMensaje(){
+  const nombre = document.getElementById("nombre").value;
+  const texto = document.getElementById("texto").value;
 
-/* 👇 PEGA AQUÍ LO DE TESTIMONIOS 👇 */
+  if(nombre === "" || texto === ""){
+    alert("Completa ambos campos 💕");
+    return;
+  }
 
+  db.collection("mensajes").add({
+    nombre: nombre,
+    texto: texto,
+    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  });
+
+  document.getElementById("nombre").value="";
+  document.getElementById("texto").value="";
+}
+
+db.collection("mensajes").orderBy("fecha")
+.onSnapshot((snapshot)=>{
+  const cont=document.getElementById("mensajes");
+  cont.innerHTML="";
+  snapshot.forEach((doc)=>{
+    const data=doc.data();
+    const div=document.createElement("div");
+    div.className="mensaje-card";
+    div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
+    cont.appendChild(div);
+  });
+});
+
+/* TESTIMONIOS */
 function enviarTestimonio(){
   const nombre = document.getElementById("nombreTestimonio").value;
   const texto = document.getElementById("textoTestimonio").value;
@@ -356,43 +386,7 @@ db.collection("testimonios").orderBy("fecha")
   });
 });
 
-/* 👆 FIN TESTIMONIOS 👆 */
-
-db.collection("mensajes").orderBy("fecha")
-.onSnapshot((snapshot)=>{
-   ...
-});
-  const nombre = document.getElementById("nombre").value;
-  const texto = document.getElementById("texto").value;
-
-  if(nombre === "" || texto === ""){
-    alert("Completa ambos campos 💕");
-    return;
-  }
-
-  db.collection("mensajes").add({
-    nombre: nombre,
-    texto: texto,
-    fecha: firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  document.getElementById("nombre").value="";
-  document.getElementById("texto").value="";
-}
-
-db.collection("mensajes").orderBy("fecha")
-.onSnapshot((snapshot)=>{
-  const cont=document.getElementById("mensajes");
-  cont.innerHTML="";
-  snapshot.forEach((doc)=>{
-    const data=doc.data();
-    const div=document.createElement("div");
-    div.className="mensaje-card";
-    div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
-    cont.appendChild(div);
-  });
-});
-
+/* GALERÍA */
 db.collection("galeria").onSnapshot((snapshot)=>{
   const gallery=document.getElementById("gallery");
   gallery.innerHTML="";
@@ -404,7 +398,7 @@ db.collection("galeria").onSnapshot((snapshot)=>{
     img.style.borderRadius="12px";
     gallery.appendChild(img);
   });
-});
+  
 </script>
 
 </body>
