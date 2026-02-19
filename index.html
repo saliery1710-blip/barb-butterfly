@@ -327,21 +327,22 @@ setInterval(crearFlor,900);
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-const firebaseConfig={
-  apiKey:"AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
-  authDomain:"barbbutterfly-bc9a6.firebaseapp.com",
-  projectId:"barbbutterfly-bc9a6"
+const firebaseConfig = {
+  apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
+  authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
+  projectId: "barbbutterfly-bc9a6"
 };
 
 firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
+const db = firebase.firestore();
 
-/* MENSAJES */
+/* ================= MENSAJES ================= */
+
 function enviarMensaje(){
   const nombre = document.getElementById("nombre").value;
   const texto = document.getElementById("texto").value;
 
-  if(nombre === "" || texto === ""){
+  if(!nombre || !texto){
     alert("Completa ambos campos 💕");
     return;
   }
@@ -358,23 +359,26 @@ function enviarMensaje(){
 
 db.collection("mensajes").orderBy("fecha")
 .onSnapshot((snapshot)=>{
-  const cont=document.getElementById("mensajes");
+  const cont = document.getElementById("mensajes");
+  if(!cont) return;
+
   cont.innerHTML="";
   snapshot.forEach((doc)=>{
-    const data=doc.data();
-    const div=document.createElement("div");
+    const data = doc.data();
+    const div = document.createElement("div");
     div.className="mensaje-card";
     div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
     cont.appendChild(div);
   });
 });
 
-/* TESTIMONIOS */
+/* ================= TESTIMONIOS ================= */
+
 function enviarTestimonio(){
   const nombre = document.getElementById("nombreTestimonio").value;
   const texto = document.getElementById("textoTestimonio").value;
 
-  if(nombre === "" || texto === ""){
+  if(!nombre || !texto){
     alert("Completa ambos campos 💕");
     return;
   }
@@ -391,30 +395,39 @@ function enviarTestimonio(){
 
 db.collection("testimonios").orderBy("fecha")
 .onSnapshot((snapshot)=>{
-  const cont=document.getElementById("testimonios");
+  const cont = document.getElementById("testimonios");
+  if(!cont) return;
+
   cont.innerHTML="";
   snapshot.forEach((doc)=>{
-    const data=doc.data();
-    const div=document.createElement("div");
+    const data = doc.data();
+    const div = document.createElement("div");
     div.className="mensaje-card";
     div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
     cont.appendChild(div);
   });
 });
 
-/* GALERÍA */
-db.collection("galeria").onSnapshot((snapshot)=>{
-  const gallery=document.getElementById("gallery");
+/* ================= GALERÍA ================= */
+
+db.collection("galeria")
+.onSnapshot((snapshot)=>{
+  const gallery = document.getElementById("gallery");
+  if(!gallery) return;
+
   gallery.innerHTML="";
+
   snapshot.forEach((doc)=>{
-    const data=doc.data();
-    const img=document.createElement("img");
-    img.src=data.imagenUrl;
+    const data = doc.data();
+    if(!data.imagenUrl) return;
+
+    const img = document.createElement("img");
+    img.src = data.imagenUrl;
     img.style.width="100%";
     img.style.borderRadius="12px";
     gallery.appendChild(img);
   });
-  
+});
 </script>
 
 </body>
