@@ -434,8 +434,7 @@ db.collection("testimonios").orderBy("fecha")
 
 /* ================= GALERÍA ================= */
 
-db.collection("galeria").orderBy("orden")
-.onSnapshot((snapshot)=>{
+db.collection("galeria").onSnapshot((snapshot)=>{
   const gallery = document.getElementById("gallery");
   if(!gallery) return;
 
