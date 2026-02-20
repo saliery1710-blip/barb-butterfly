@@ -101,16 +101,22 @@
 
   /* Stamps fila inferior */
   .stamps-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    padding: 10px;
-  }
-  .stamps-container img {
-    width: 88px; height: 31px;
-    border: 1px solid #bcd39b;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 15px;
+  background: #fdfdfd;
+}
+
+.stamps-container img {
+  width: 88px; /* Tamaño estándar de stamps */
+  height: 31px; /* Tamaño estándar de stamps */
+  border: 1px solid #bcd39b;
+  image-rendering: pixelated; /* Mantiene el estilo pixel art nítido */
+  object-fit: contain; /* Evita que la imagen se estire feo */
+}
+
 
   /* Tarjetas de mensajes */
   .mensaje-card {
@@ -206,7 +212,7 @@
   <tr>
   <td colspan="3" class="box" style="padding: 0;">
     <div class="stamps-container">
-      <img src="https://cyber.dabamos.de/88x31/miku.gif" alt="Miku">
+      <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Stam.gif" alt="like">
       <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/200.gif" alt="Jesús">
       <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/giphy.gif" alt="Sello">
       <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/pengu-pudgy.gif" alt="pengu">
