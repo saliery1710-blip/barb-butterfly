@@ -158,21 +158,36 @@
     </td>
 
     <td class="box">
-      <h2 style="font-size: 18px; color: #bcd39b; text-align: center;">🛍 Tienda</h2>
-      <div style="background: #f1f8e4; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #bcd39b;">
-        <h3 style="margin-top:0;">Devocional “Raíces Firmes”</h3>
-        <a href="https://TULINKDESYSTEMEIO.com" target="_blank">
-          <button style="padding: 10px 20px; background: #bcd39b; border: none; border-radius: 5px; color: white; cursor: pointer;">Comprar</button>
-        </a>
-      </div>
+    <td class="box">
+  <h2 style="font-size: 18px; color: #bcd39b; text-align: center;">🛍 Tienda</h2>
+  <div style="background: #f1f8e4; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #bcd39b;">
+    <h3 style="margin-top:0;">Devocional “Raíces Firmes”</h3>
+    <a href="https://TULINKDESYSTEMEIO.com" target="_blank">
+      <button style="padding: 10px 20px; background: #bcd39b; border: none; border-radius: 5px; color: white; cursor: pointer;">Comprar</button>
+    </a>
+  </div>
 
-      <h2 style="font-size: 18px; color: #bcd39b; text-align: center; margin-top: 20px;">📖 Libro de Mensajes</h2>
-      <input type="text" id="nombre" placeholder="Tu nombre">
-      <textarea id="texto" placeholder="Escribe tu mensaje..."></textarea>
-      <button onclick="enviarMensaje()" style="background:#dce9c8; border:1px solid #bcd39b; padding:8px; width:100%; border-radius:5px; font-weight:bold; cursor:pointer;">Enviar ✨</button>
-      
-<div class="pet-container">
-  <img src="https://64.media.tumblr.com/7918a3952a81878d6d67f1b250552631/tumblr_inline_p4p1m2oT8K1v3v9no_75sq.gif" 
+  <h2 style="font-size: 18px; color: #bcd39b; text-align: center; margin-top: 20px;">📖 Libro de Mensajes</h2>
+  <input type="text" id="nombre" placeholder="Tu nombre">
+  <textarea id="texto" placeholder="Escribe tu mensaje..."></textarea>
+  <button onclick="enviarMensaje()" style="background:#dce9c8; border:1px solid #bcd39b; padding:8px; width:100%; border-radius:5px; font-weight:bold; cursor:pointer;">Enviar ✨</button>
+  
+  <div id="mensajes" style="margin-top: 15px;"></div>
+
+  <h2 style="font-size: 18px; color: #bcd39b; text-align: center;">🌷 Galería Celestial</h2>
+  <div id="gallery" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px;"></div>
+  <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Cielo.jpg" style="width:100%; border-radius:12px; margin-top:10px;">
+</td>
+
+<td width="200" class="box">
+  <div style="text-align: center; margin-bottom: 10px;">🎀 Menú 🎀</div>
+  <a href="prayer.html" class="menu-button">Prayer Garden</a>
+  <a href="#" class="menu-button">Guestbook</a>
+  <a href="#" class="menu-button">Gallery</a>
+  <a href="#" class="menu-button">Testimonios</a>
+  
+  <div class="pet-container">
+  <img src="https://saichotic.github.io/chill-zone/assets/images/butterfly.gif" 
        class="mascota-virtual" alt="Butterfly Pet">
   <p style="font-size: 11px; font-weight: bold; color: #7a8c5d; margin: 0;">
     Lila la Mariposa
@@ -180,36 +195,26 @@
   <p style="font-size: 9px; color: #bcd39b;">Estado: Feliz ✨</p>
 </div>
 
-      <div id="mensajes" style="margin-top: 15px;"></div>
-
-      <h2 style="font-size: 18px; color: #bcd39b; text-align: center;">🌷 Galería Celestial</h2>
-      <div id="gallery" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px;"></div>
-      <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Cielo.jpg" style="width:100%; border-radius:12px; margin-top:10px;">
-    </td>
-
-    <td width="200" class="box">
-      <div style="text-align: center; margin-bottom: 10px;">🎀 Menú 🎀</div>
-      <a href="prayer.html" class="menu-button">Prayer Garden</a>
-      <a href="#" class="menu-button">Guestbook</a>
-      <a href="#" class="menu-button">Gallery</a>
-      <a href="#" class="menu-button">Testimonios</a>
-      
-      <div style="text-align: center; margin-top: 30px;">
-        <img src="https://cur.cursors-4u.net/ani/ani-1/ani1.gif" width="50">
-        <p style="font-size: 10px; color: #bcd39b;">Pet: Iggy</p>
-      </div>
-    </td>
+  
+  <div style="text-align: center; margin-top: 30px;">
+    <img src="https://cur.cursors-4u.net/ani/ani-1/ani1.gif" width="50">
+    <p style="font-size: 10px; color: #bcd39b;">Pet: Iggy</p>
+  </div>
+</td>
   </tr>
 
   <tr>
-    <td colspan="3" class="box" style="padding: 0;">
-      <div class="stamps-container">
-        <img src="https://cyber.dabamos.de/88x31/anime.gif">
-        <img src="https://cyber.dabamos.de/88x31/miku.gif">
-        <img src="https://cyber.dabamos.de/88x31/hellokitty.gif">
-      </div>
-    </td>
-  </tr>
+  <td colspan="3" class="box" style="padding: 0;">
+    <div class="stamps-container">
+      <img src="https://cyber.dabamos.de/88x31/miku.gif" alt="Miku">
+      <img src="https://cyber.dabamos.de/88x31/hellokitty.gif" alt="Hello Kitty">
+      <img src="https://cyber.dabamos.de/88x31/linux2.gif" alt="Linux Cute">
+      <img src="https://cyber.dabamos.de/88x31/best-viewed-800x600.gif" alt="800x600">
+      <img src="https://cyber.dabamos.de/88x31/internet-explorer.gif" alt="IE">
+    </div>
+  </td>
+</tr>
+
 </table>
 
 <div id="radioButton" onclick="toggleRadio()">🎵</div>
