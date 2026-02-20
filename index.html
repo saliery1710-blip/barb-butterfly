@@ -8,450 +8,269 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  font-family:'Cormorant Garamond', serif;
-  background: linear-gradient(-45deg,#ffd6f6,#fce1ff,#e6d0ff,#ffeefc);
-  background-size:400% 400%;
-  animation:gradientMove 15s ease infinite;
-}
-@keyframes gradientMove{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
-/* EFECTOS */
-#particles-js{
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  z-index:0;
-  pointer-events:none;
+  body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    /* Patrón de puntos solicitado */
+    background-color: #fdf2f8; 
+    background-image: radial-gradient(#bcd39b 2px, transparent 2px);
+    background-size: 30px 30px;
+    color: #6a5d6d;
+  }
+.mascota-virtual {
+  display: block;
+  margin: 10px auto;
+  width: 60px; /* Tamaño de la mascota */
+  animation: flotar 3s ease-in-out infinite;
+  image-rendering: pixelated; /* Para que el pixel art se vea nítido */
 }
 
-.flores{
-  position:fixed;
-  width:100%;
-  height:100%;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:1;
+@keyframes flotar {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
-.main-table{
-  position:relative;
-  z-index:5;
+.pet-container {
+  text-align: center;
+  background: #f1f8e4;
+  border: 1px dashed #bcd39b;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 20px;
 }
 
-.flor{
-  position:absolute;
-  top:-50px;
-  animation:caer linear infinite;
-  opacity:0.8;
-}
+  .main-table {
+    width: 95%;
+    max-width: 950px;
+    margin: 0 auto;
+    background: #ffffff;
+    border: 5px double #bcd39b;
+    border-radius: 15px;
+    border-collapse: separate;
+    border-spacing: 15px;
+  }
 
-@keyframes caer{
-  0%{transform:translateY(0) rotate(0deg);}
-  100%{transform:translateY(110vh) rotate(360deg);}
-}
+  .box {
+    background: #ffffff;
+    border: 2px solid #bcd39b;
+    border-radius: 10px;
+    padding: 15px;
+    vertical-align: top;
+    box-shadow: 3px 3px 0px #e3f1c4;
+  }
 
-h1{
-  font-family:'Cinzel Decorative',serif;
-  letter-spacing:3px;
-  text-shadow:0 0 10px #ffb6ff;
-}
+  .banner {
+    background: #f1f8e4;
+    border: 2px solid #bcd39b;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .banner h1 {
+    font-family: 'Cinzel Decorative', serif;
+    margin: 0;
+    color: #ff69b4;
+    text-shadow: 2px 2px 0px #fff;
+  }
 
-.main-table{
-  width:95%;
-  max-width:900px;
-  margin:30px auto;
-  background:#fff8ee;
-  border:5px double #bcd39b;
-}
+  /* Menú lateral estilo botones verdes */
+  .menu-button {
+    background: #e3f1c4;
+    border: 2px solid #bcd39b;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: #7a8c5d;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s;
+    box-shadow: 2px 2px 0px #bcd39b;
+  }
+  .menu-button:hover {
+    background: #fce1ff;
+    border-color: #f4b8cd;
+    color: #b58296;
+    box-shadow: 2px 2px 0px #f4b8cd;
+  }
 
-.banner{
-  height:220px;
-  background:linear-gradient(45deg,#ffd6ec,#e6ffe6);
-  border:4px double #f4b8cd;
-  text-align:center;
-  color:#ff69b4;
-}
-.banner h1{padding-top:60px;font-size:36px;}
+  /* Stamps fila inferior */
+  .stamps-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 10px;
+  }
+  .stamps-container img {
+    width: 88px; height: 31px;
+    border: 1px solid #bcd39b;
+  }
 
-.box{
-  background:#f8dce6;
-  border:3px solid #bcd39b;
-  padding:10px;
-}
+  /* Tarjetas de mensajes */
+  .mensaje-card {
+    background: #fdf2f8;
+    border-left: 4px solid #f4b8cd;
+    padding: 8px;
+    margin: 6px 0;
+    font-size: 13px;
+  }
 
-.tienda-card{
-  background:white;
-  padding:15px;
-  margin:10px 0;
-  border-radius:15px;
-  box-shadow:0 4px 10px rgba(0,0,0,0.1);
-  text-align:center;
-}
-
-.menu-button{
-  background:#dce9c8;
-  border:2px solid #f4b8cd;
-  padding:6px;
-  margin:5px 0;
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  color:#6a5d6d;
-  font-weight:bold;
-}
-
-.mensaje-card{
-  background:#fff0f5;
-  padding:8px;
-  margin:6px 0;
-  border-radius:10px;
-}
-
-/* RADIO */
-#radioY2K{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:280px;
-  background:linear-gradient(135deg,#ffd6f6,#e6d0ff);
-  border:3px double #f4b8cd;
-  border-radius:15px;
-  box-shadow:0 0 20px #ffc0ff;
-  z-index:9999;
-  overflow:hidden;
-}
-.radio-header{
-  background:#fff0f5;
-  padding:8px;
-  display:flex;
-  justify-content:space-between;
-}
-#player{height:180px;}
-  /* BOTÓN FLOTANTE RADIO */
-#radioButton{
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#ffd6f6,#e6d0ff);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-  cursor:pointer;
-  box-shadow:0 0 20px #ffc0ff;
-  z-index:9999;
-  transition:transform 0.3s ease;
-}
-
-#radioButton:hover{
-  transform:scale(1.1);
-}
-  /* ===== MARCO BRILLANTE CELESTIAL ===== */
-
-#gallery img{
-  width:100%;
-  border-radius:18px;
-  padding:4px;
-  background: linear-gradient(45deg,#ffb6ff,#caa8ff,#8fd3ff,#ffb6ff);
-  background-size:300% 300%;
-  animation: brilloBorde 6s ease infinite;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  box-shadow: 0 0 15px rgba(255,182,255,0.6);
-}
-
-#gallery img:hover{
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255,182,255,1);
-}
-
-@keyframes brilloBorde{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
+  /* Radio Panel */
+  #radioY2K {
+    position: fixed; bottom: 80px; right: 20px;
+    background: white; border: 3px double #f4b8cd;
+    border-radius: 15px; z-index: 9999; overflow: hidden;
+  }
+  #radioButton {
+    position: fixed; bottom: 20px; right: 20px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #e3f1c4; border: 2px solid #bcd39b;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 9999;
+  }
 </style>
 </head>
 
 <body>
 
-<div id="particles-js"></div>
-<div class="flores"></div>
+<table class="main-table">
+  <tr>
+    <td colspan="3">
+      <div class="banner">
+        <h1>Barb Butterfly</h1>
+        <p>Bienvenida al espacio de las hijas</p>
+      </div>
+    </td>
+  </tr>
 
-<table class="main-table" cellspacing="10">
-<tr>
-<td colspan="3">
-<div class="banner">
-<h1>Barb Butterfly</h1>
-<p>Bienvenida al espacio de las hijas</p>
-</div>
-</td>
-</tr>
+  <tr>
+    <td width="200" class="box">
+      <h3 style="font-size: 16px; border-bottom: 1px dashed #bcd39b;">Perfil</h3>
+      <p><strong>Nombre:</strong> Barbara</p>
+      <p><strong>Alias:</strong> Hija amada de Dios</p>
+      <img src="caricatura.png" width="100%" style="border-radius: 10px; border: 1px solid #bcd39b;">
+    </td>
 
-<tr>
+    <td class="box">
+      <h2 style="font-size: 18px; color: #bcd39b; text-align: center;">🛍 Tienda</h2>
+      <div style="background: #f1f8e4; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #bcd39b;">
+        <h3 style="margin-top:0;">Devocional “Raíces Firmes”</h3>
+        <a href="https://TULINKDESYSTEMEIO.com" target="_blank">
+          <button style="padding: 10px 20px; background: #bcd39b; border: none; border-radius: 5px; color: white; cursor: pointer;">Comprar</button>
+        </a>
+      </div>
 
-<td width="200" class="box">
-<h3>Perfil</h3>
-<p><strong>Nombre:</strong> Barbara</p>
-<p><strong>Alias:</strong> Hija amada de Dios</p>
-<img src="caricatura.png" width="120">
-</td>
-
-<td class="box">
-
-<h2>🛍 Tienda</h2>
-<div class="tienda-card">
-<h3>Devocional “Raíces Firmes”</h3>
-<a href="https://TULINKDESYSTEMEIO.com" target="_blank">
-<button>Comprar</button>
-</a>
-</div>
-
-<h2>📖 Libro de Mensajes</h2>
-
-<div style="margin-bottom:15px;">
-  <input type="text" id="nombre" placeholder="Tu nombre" style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:1px solid #ccc;">
-  
-  <textarea id="texto" placeholder="Escribe tu mensaje..." 
-  style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;"></textarea>
-  
-  <button onclick="enviarMensaje()" 
-  style="margin-top:8px;padding:8px 15px;border:none;border-radius:10px;background:#dce9c8;font-weight:bold;">
-  Enviar ✨
-  </button>
+      <h2 style="font-size: 18px; color: #bcd39b; text-align: center; margin-top: 20px;">📖 Libro de Mensajes</h2>
+      <input type="text" id="nombre" placeholder="Tu nombre">
+      <textarea id="texto" placeholder="Escribe tu mensaje..."></textarea>
+      <button onclick="enviarMensaje()" style="background:#dce9c8; border:1px solid #bcd39b; padding:8px; width:100%; border-radius:5px; font-weight:bold; cursor:pointer;">Enviar ✨</button>
+      
+<div class="pet-container">
+  <img src="https://64.media.tumblr.com/7918a3952a81878d6d67f1b250552631/tumblr_inline_p4p1m2oT8K1v3v9no_75sq.gif" 
+       class="mascota-virtual" alt="Butterfly Pet">
+  <p style="font-size: 11px; font-weight: bold; color: #7a8c5d; margin: 0;">
+    Lila la Mariposa
+  </p>
+  <p style="font-size: 9px; color: #bcd39b;">Estado: Feliz ✨</p>
 </div>
 
-<div id="mensajes"></div>
+      <div id="mensajes" style="margin-top: 15px;"></div>
 
-<h2>🌷 Galería Celestial</h2>
-<div id="gallery" style="
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
-gap:10px;"></div>
-  <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Cielo.jpg" style="width:100%;border-radius:12px;">
-<h2>💖 Testimonios</h2>
+      <h2 style="font-size: 18px; color: #bcd39b; text-align: center;">🌷 Galería Celestial</h2>
+      <div id="gallery" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(100px,1fr)); gap:10px;"></div>
+      <img src="https://raw.githubusercontent.com/saliery1710-blip/galeria-celestial-assets/main/Cielo.jpg" style="width:100%; border-radius:12px; margin-top:10px;">
+    </td>
 
-<div style="margin-bottom:15px;">
-  <input type="text" id="nombreTestimonio" placeholder="Tu nombre"
-  style="width:100%;padding:8px;margin-bottom:6px;border-radius:8px;border:1px solid #ccc;">
+    <td width="200" class="box">
+      <div style="text-align: center; margin-bottom: 10px;">🎀 Menú 🎀</div>
+      <a href="prayer.html" class="menu-button">Prayer Garden</a>
+      <a href="#" class="menu-button">Guestbook</a>
+      <a href="#" class="menu-button">Gallery</a>
+      <a href="#" class="menu-button">Testimonios</a>
+      
+      <div style="text-align: center; margin-top: 30px;">
+        <img src="https://cur.cursors-4u.net/ani/ani-1/ani1.gif" width="50">
+        <p style="font-size: 10px; color: #bcd39b;">Pet: Iggy</p>
+      </div>
+    </td>
+  </tr>
 
-  <textarea id="textoTestimonio" placeholder="Escribe tu testimonio..."
-  style="width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;"></textarea>
-
-  <button onclick="enviarTestimonio()"
-  style="margin-top:8px;padding:8px 15px;border:none;border-radius:10px;background:#ffd6ec;font-weight:bold;">
-  Enviar Testimonio ✨
-  </button>
-</div>
-
-<div id="testimonios"></div>
-</td>
-
-<td width="200" class="box">
-<a href="prayer.html" class="menu-button">Prayer Garden</a>
-</td>
-
-</tr>
+  <tr>
+    <td colspan="3" class="box" style="padding: 0;">
+      <div class="stamps-container">
+        <img src="https://cyber.dabamos.de/88x31/anime.gif">
+        <img src="https://cyber.dabamos.de/88x31/miku.gif">
+        <img src="https://cyber.dabamos.de/88x31/hellokitty.gif">
+      </div>
+    </td>
+  </tr>
 </table>
 
-<!-- RADIO -->
-<!-- BOTÓN FLOTANTE -->
-<div id="radioButton" onclick="toggleRadio()">
-  🎵
-</div>
-
-<!-- RADIO PANEL -->
+<div id="radioButton" onclick="toggleRadio()">🎵</div>
 <div id="radioY2K" style="display:none;">
-  <div class="radio-header">
-    ✨ Celestial Radio
-    <span onclick="toggleRadio()">✖</span>
+  <div style="background:#fff0f5; padding:5px; font-size:12px; display:flex; justify-content:space-between;">
+    ✨ Celestial Radio <span onclick="toggleRadio()" style="cursor:pointer;">✖</span>
   </div>
   <div id="player"></div>
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
-
-<script>
-let player;
-
-function onYouTubeIframeAPIReady(){
-  player = new YT.Player('player',{
-    height:'180',
-    width:'280',
-    playerVars:{
-      listType:'playlist',
-      list:'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa',
-      controls:1
-    }
-  });
-}
-
-function toggleRadio(){
-  const radio = document.getElementById("radioY2K");
-
-  if(radio.style.display === "none"){
-    radio.style.display = "block";
-  } else {
-    radio.style.display = "none";
-  }
-}
-</script>
-  <script>
-function toggleRadio(){
-  const radio = document.getElementById("radioY2K");
-  if(radio.style.display === "none"){
-    radio.style.display = "block";
-  } else {
-    radio.style.display = "none";
-  }
-}
-</script>
-
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script>
-particlesJS("particles-js", {
-  particles: {
-    number: { value: 50 },
-    size: { value: 3 },
-    move: { speed: 0.6 },
-    opacity: { value: 0.5 },
-    line_linked: { enable: false }
-  }
-});
-
-/* FLORES */
-const floresContainer = document.querySelector(".flores");
-
-function crearFlor(){
-  const flor = document.createElement("div");
-  flor.classList.add("flor");
-  flor.innerHTML = ["🌸","🌷","🦋","🩷","⭐️"][Math.floor(Math.random()*3)];
-  flor.style.left = Math.random()*100 + "vw";
-  flor.style.animationDuration = (6 + Math.random()*6) + "s";
-  flor.style.fontSize = (15 + Math.random()*20) + "px";
-  floresContainer.appendChild(flor);
-
-  setTimeout(()=>{flor.remove();},12000);
-}
-
-setInterval(crearFlor,900);
-</script>
-
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
-  authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
-  projectId: "barbbutterfly-bc9a6"
-};
+  // Tu Configuración de Firebase intacta
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_Gmim74xpwpBqdHkgZvwUJdhXLyvsfw0",
+    authDomain: "barbbutterfly-bc9a6.firebaseapp.com",
+    projectId: "barbbutterfly-bc9a6"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-/* ================= MENSAJES ================= */
-
-function enviarMensaje(){
-  const nombre = document.getElementById("nombre").value;
-  const texto = document.getElementById("texto").value;
-
-  if(!nombre || !texto){
-    alert("Completa ambos campos 💕");
-    return;
+  // Tus funciones de enviarMensaje y cargar mensajes intactas
+  function enviarMensaje(){
+    const nombre = document.getElementById("nombre").value;
+    const texto = document.getElementById("texto").value;
+    if(!nombre || !texto){ alert("Completa ambos campos 💕"); return; }
+    db.collection("mensajes").add({
+      nombre: nombre, texto: texto,
+      fecha: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    document.getElementById("nombre").value=""; document.getElementById("texto").value="";
   }
 
-  db.collection("mensajes").add({
-    nombre: nombre,
-    texto: texto,
-    fecha: firebase.firestore.FieldValue.serverTimestamp()
+  db.collection("mensajes").orderBy("fecha").onSnapshot((snapshot)=>{
+    const cont = document.getElementById("mensajes");
+    if(!cont) return;
+    cont.innerHTML="";
+    snapshot.forEach((doc)=>{
+      const data = doc.data();
+      const div = document.createElement("div");
+      div.className="mensaje-card";
+      div.innerHTML=`<strong>${data.nombre}</strong>: ${data.texto}`;
+      cont.appendChild(div);
+    });
   });
 
-  document.getElementById("nombre").value="";
-  document.getElementById("texto").value="";
-}
-
-db.collection("mensajes").orderBy("fecha")
-.onSnapshot((snapshot)=>{
-  const cont = document.getElementById("mensajes");
-  if(!cont) return;
-
-  cont.innerHTML="";
-  snapshot.forEach((doc)=>{
-    const data = doc.data();
-    const div = document.createElement("div");
-    div.className="mensaje-card";
-    div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
-    cont.appendChild(div);
-  });
-});
-
-/* ================= TESTIMONIOS ================= */
-
-function enviarTestimonio(){
-  const nombre = document.getElementById("nombreTestimonio").value;
-  const texto = document.getElementById("textoTestimonio").value;
-
-  if(!nombre || !texto){
-    alert("Completa ambos campos 💕");
-    return;
+  // Script de Radio YouTube
+  let player;
+  function onYouTubeIframeAPIReady(){
+    player = new YT.Player('player',{
+      height:'180', width:'280',
+      playerVars:{ listType:'playlist', list:'PLugEmV0ZKCqwuBmcOA_bdem8IZ8Jl5IXa'}
+    });
   }
-
-  db.collection("testimonios").add({
-    nombre: nombre,
-    texto: texto,
-    fecha: firebase.firestore.FieldValue.serverTimestamp()
-  });
-
-  document.getElementById("nombreTestimonio").value="";
-  document.getElementById("textoTestimonio").value="";
-}
-
-db.collection("testimonios").orderBy("fecha")
-.onSnapshot((snapshot)=>{
-  const cont = document.getElementById("testimonios");
-  if(!cont) return;
-
-  cont.innerHTML="";
-  snapshot.forEach((doc)=>{
-    const data = doc.data();
-    const div = document.createElement("div");
-    div.className="mensaje-card";
-    div.innerHTML=`<strong>${data.nombre}</strong><br>${data.texto}`;
-    cont.appendChild(div);
-  });
-});
-
-/* ================= GALERÍA ================= */
-
-const gallery = document.getElementById("gallery");
-
-db.collection("galeria")
-.orderBy("orden")
-.onSnapshot((snapshot) => {
-
-  gallery.innerHTML = ""; // limpia antes de volver a dibujar
-
-  snapshot.forEach((doc) => {
-    const data = doc.data();
-
-    const img = document.createElement("img");
-    img.src = data.imagenUrl;
-
-    gallery.appendChild(img);
-  });
-
-});
+  function toggleRadio(){
+    const radio = document.getElementById("radioY2K");
+    radio.style.display = (radio.style.display === "none") ? "block" : "none";
+  }
 </script>
 
 </body>
